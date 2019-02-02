@@ -11,6 +11,7 @@ class Merchant(models.Model):
     updated_time = models.DateTimeField(_('updated time'), auto_now=True)
     name = models.CharField(_('merchant name'), max_length=30)
     accounts = models.ManyToManyField(Account)
+    is_active = models.BooleanField(_('is active'), default=True)
 
     def __str__(self):
         return self.name

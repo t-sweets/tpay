@@ -15,6 +15,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,14 +58,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tpay.wsgi.application'
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.Account'
 
 # Database
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'tpay',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': '3307',
     }
 }
 
@@ -117,3 +123,26 @@ REST_FRAMEWORK = {
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
 }
+
+# AUTHENTICATION_BACKENDS = (
+#     "django_python3_ldap.auth.LDAPBackend",
+# )
+#
+# LDAP_AUTH_URL = "ldap://ldap.internal.t-lab.cs.teu.ac.jp:389"
+# LDAP_AUTH_USE_TLS = False
+# LDAP_AUTH_SEARCH_BASE = "ou=people,dc=t-lab,dc=cs,dc=teu,dc=ac,dc=jp"
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "handlers": {
+#         "console": {
+#             "class": "logging.StreamHandler",
+#         },
+#     },
+#     "loggers": {
+#         "django_python3_ldap": {
+#             "handlers": ["console"],
+#             "level": "ERROR",
+#         },
+#     },
+# }

@@ -1,11 +1,12 @@
-from .models import User
 from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
+from .models import Account
 
-@admin.register(User)
-class AdminUserAdmin(UserAdmin):
+
+@admin.register(Account)
+class AccountAdmin(UserAdmin):
 
     fieldsets = (
         (None, {'fields': ('username', 'password')}),

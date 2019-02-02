@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import Account
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -7,11 +7,11 @@ class AccountSerializer(serializers.ModelSerializer):
     balance = serializers.CharField(read_only=True)
 
     class Meta:
-        model = User
+        model = Account
         fields = ('username', 'email', 'display_name', 'balance', 'password')
 
     def create(self, validated_data):
-        return User.objects.create_user(request_data=validated_data)
+        return Account.objects.create_user(request_data=validated_data)
 
     def update(self, instance, validated_data):
         if 'password' in validated_data:

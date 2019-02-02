@@ -6,6 +6,6 @@ from .views import MerchantViewSet, MerchantAllCheckoutListView, MerchantCheckou
 urlpatterns = [
     url(r'^', MerchantViewSet.as_view({'get': 'list'})),
     url(r'^(?P<merchant>.+)/$', MerchantViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'})),
-    url(r'^checkout/$', MerchantAllCheckoutListView.as_view()),
-    url(r'^(?P<merchant>.+)/checkout/$', MerchantCheckoutListView.as_view()),
+    url(r'^checkouts/$', MerchantAllCheckoutListView.as_view()),
+    url(r'^(?P<merchant>.+)/checkouts/$', MerchantCheckoutListView.as_view()),
 ]

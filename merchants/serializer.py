@@ -1,11 +1,17 @@
-from rest_framework import serializers\
+from rest_framework import serializers
 
 from .models import Merchant
-from accounts.serializer import AccountSerializer
+from accounts.models import Account
+
+
+class MerchantAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('uuid', 'username', 'email')
 
 
 class MerchantSerializer(serializers.ModelSerializer):
-    accounts = AccountSerializer(read_only=True, many=True)
+    accounts = MerchantAccountSerializer(read_only=True, many=True)
 
     class Meta:
         model = Merchant

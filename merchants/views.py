@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, mixins
+from django.shortcuts import get_object_or_404
 
 from .models import Merchant
 from .serializer import MerchantSerializer
@@ -11,10 +12,12 @@ from checkouts.models import Checkout
 class MerchantViewSet(mixins.UpdateModelMixin,
                       mixins.DestroyModelMixin,
                       mixins.ListModelMixin,
+                      mixins.RetrieveModelMixin,
                       viewsets.GenericViewSet):
 
-    permission_classes = (IsAuthenticated,)
+    lookup_field = 'uuid'
     serializer_class = MerchantSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         account = self.request.user
@@ -27,16 +30,20 @@ class MerchantViewSet(mixins.UpdateModelMixin,
 
 class MerchantAllCheckoutListView(generics.ListAPIView):
     serializer_class = CheckoutSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        user = self.request.user
-        owner_merchants = user.merchant_set.all()
-        return Checkout.objects.filter(merchant=owner_merchants)
+        account = self.request.user
+        merchants = account.merchant_set.all()
+        return Checkout.objects.filter(merchant__in=merchants)
 
 
 class MerchantCheckoutListView(generics.ListAPIView):
     serializer_class = CheckoutSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        merchant = self.kwargs['merchant']
+        account = self.request.user
+        merchants = account.merchant_set.all()
+        merchant = get_object_or_404(merchants, uuid=self.kwargs['uuid'])
         return Checkout.objects.filter(merchant=merchant)

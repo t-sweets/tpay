@@ -1,5 +1,15 @@
 from rest_framework import serializers
-from .models import Account
+from .models import Account, Idm
+
+
+class IdmSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Idm
+        fields = ('idm', 'account')
+        extra_kwargs = {
+            'idm': {'write_only': True},
+            'account': {'write_only': True},
+        }
 
 
 class AccountSerializer(serializers.ModelSerializer):

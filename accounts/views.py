@@ -3,8 +3,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import permissions, generics, mixins, viewsets
 from rest_framework.response import Response
 
-from .serializer import AccountSerializer
-from .models import Account
+from .serializer import AccountSerializer, IdmSerializer
+from .models import Account, Idm
 
 
 class AccountRegisterView(generics.CreateAPIView):
@@ -37,3 +37,9 @@ class AccountViewSet(mixins.RetrieveModelMixin,
     def perform_destroy(self, instance):
         instance.is_active = False
         instance.save()
+
+
+class IdmView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = IdmSerializer
+    queryset = Idm.objects.all()

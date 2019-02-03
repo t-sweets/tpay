@@ -77,3 +77,14 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def clean(self):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
+
+
+class Idm(models.Model):
+    idm = models.CharField(
+        _('IDm Number'),
+        max_length=16,
+        unique=True,
+        error_messages={
+            'unique': _("This card is already registered"),
+        },)
+    account = models.ForeignKey(Account, verbose_name=_('account'), on_delete=models.CASCADE)

@@ -9,6 +9,8 @@ urlpatterns = [
     url(r'^api/', include([
         url(r'^v1/', include([
             url(r'^accounts/', include('accounts.urls')),
+            url(r'^merchants/', include('merchants.urls')),
+            url(r'^checkouts/', include('checkouts.urls')),
         ]))
     ])),
 ]

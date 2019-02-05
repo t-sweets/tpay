@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils import timezone
@@ -77,6 +77,28 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def clean(self):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
+
+    @classmethod
+    def deposit(cls, pk, amount):
+        with transaction.atomic():
+            account = (cls.objects.select_for_update().get(id=pk))
+            account.balance += amount
+            account.save()
+
+        return account
+
+    @classmethod
+    def withdraw(cls, pk, amount):
+        with transaction.atomic():
+            account = (cls.objects.select_for_update().get(id=pk))
+
+            if account.balance < amount:
+                raise ValueError(_('Insufficient funds'))
+
+            account.balance -= amount
+            account.save()
+
+        return account
 
 
 class Idm(models.Model):

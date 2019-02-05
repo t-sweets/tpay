@@ -24,9 +24,6 @@ class CheckoutManager(models.Manager):
 
         return checkout
 
-    def cancel(self):
-        pass
-
 
 class Checkout(models.Model):
     CARD, QR = 0, 1

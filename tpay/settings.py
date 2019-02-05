@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'accounts',
-    'merchants'
+    'merchants',
+    'checkouts'
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+    'EXCEPTION_HANDLER': 'tpay.utils.t_pay_exception_handler'
 }
 
 # AUTHENTICATION_BACKENDS = (

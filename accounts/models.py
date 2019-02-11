@@ -4,7 +4,8 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from common.models import BaseModel
+from common.models import ULIDField
+import ulid
 
 
 class AccountManager(BaseUserManager):
@@ -38,9 +39,10 @@ class AccountManager(BaseUserManager):
         return user
 
 
-class Account(AbstractBaseUser, PermissionsMixin, BaseModel):
+class Account(AbstractBaseUser, PermissionsMixin):
     username_validator = UnicodeUsernameValidator()
 
+    id = ULIDField(default=ulid.new, primary_key=True, unique=True, editable=False)
     username = models.CharField(
         _('username'),
         max_length=150,

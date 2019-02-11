@@ -15,12 +15,12 @@ class ULIDField(models.CharField):
 
 class BaseModel(models.Model):
 
-    id = ULIDField(default=ulid.new, unique=True, editable=False)
+    id = ULIDField(default=ulid.new, primary_key=True, unique=True, editable=False)
     created_time = models.DateTimeField(_('created time'), auto_now_add=True)
     updated_time = models.DateTimeField(_('updated time'), auto_now=True)
     deleted = models.BooleanField(_('deleted'), default=False)
 
-    class Meta(models.Model):
+    class Meta:
         abstract = True
 
     def remove(self):
@@ -30,5 +30,3 @@ class BaseModel(models.Model):
     def unremove(self):
         self.deleted = False
         self.save()
-
-

@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^register_idm/$', IdmView.as_view()),
 
     url(r'^checkouts/$', AccountCheckoutViewSet.as_view()),
-    url(r'^checkouts/(?P<uuid>.+)/$', AccountCheckoutViewSet.as_view()),
+    url(r'^checkouts/(?P<id>.+)/$', AccountCheckoutViewSet.as_view()),
 ]

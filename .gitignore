@@ -208,3 +208,4 @@ modules.xml
 *.ipr
 
 # End of https://www.gitignore.io/api/django,intellij+all
+/db/

@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'merchants',
-    'checkouts'
+    'checkouts',
+    'common'
 ]
 
 MIDDLEWARE = [

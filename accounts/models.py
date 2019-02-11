@@ -3,7 +3,9 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-import uuid as uuid_lib
+
+from common.models import ULIDField
+import ulid
 
 
 class AccountManager(BaseUserManager):
@@ -17,7 +19,6 @@ class AccountManager(BaseUserManager):
             email=self.normalize_email(request_data['email']),
             is_active=True,
             last_login=now,
-            date_joined=now,
         )
 
         user.set_password(request_data['password'])
@@ -41,7 +42,7 @@ class AccountManager(BaseUserManager):
 class Account(AbstractBaseUser, PermissionsMixin):
     username_validator = UnicodeUsernameValidator()
 
-    uuid = models.UUIDField(default=uuid_lib.uuid4, unique=True, editable=False)
+    id = ULIDField(default=ulid.new, primary_key=True, unique=True, editable=False)
     username = models.CharField(
         _('username'),
         max_length=150,

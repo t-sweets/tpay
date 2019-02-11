@@ -7,7 +7,7 @@ from accounts.models import Account
 class MerchantAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ('uuid', 'username', 'email')
+        fields = ('id', 'username', 'email')
 
 
 class MerchantSerializer(serializers.ModelSerializer):
@@ -15,4 +15,4 @@ class MerchantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Merchant
-        fields = ('uuid', 'name', 'accounts')
+        fields = ('id', 'name', 'accounts')

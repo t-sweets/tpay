@@ -1,5 +1,4 @@
-from rest_framework import permissions, generics, mixins, viewsets, status
-from rest_framework.response import Response
+from rest_framework import permissions, generics
 
 from .models import Checkout
 from .serializer import CheckoutSerializer

@@ -15,7 +15,7 @@ class MerchantViewSet(mixins.UpdateModelMixin,
                       mixins.RetrieveModelMixin,
                       viewsets.GenericViewSet):
 
-    lookup_field = 'uuid'
+    lookup_field = 'id'
     serializer_class = MerchantSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -45,5 +45,5 @@ class MerchantCheckoutListView(generics.ListAPIView):
     def get_queryset(self):
         account = self.request.user
         merchants = account.merchant_set.all()
-        merchant = get_object_or_404(merchants, uuid=self.kwargs['uuid'])
+        merchant = get_object_or_404(merchants, id=self.kwargs['id'])
         return Checkout.objects.filter(merchant=merchant)

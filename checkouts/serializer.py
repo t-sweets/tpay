@@ -8,7 +8,7 @@ class CheckoutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Checkout
-        fields = ('uuid', 'created_time', 'updated_time', 'amount', 'merchant', 'idm', 'payment_method')
+        fields = ('id', 'created_time', 'updated_time', 'amount', 'merchant', 'idm', 'payment_method')
 
     def create(self, validated_data):
         return Checkout.objects.checkout(request_data=validated_data)

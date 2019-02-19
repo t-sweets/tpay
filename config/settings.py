@@ -11,7 +11,7 @@ SECRET_KEY = 'aqzp*s_)$7x%8f3u_+gf2*q2ex4c-@+b0b9(c%_p%y0spj82=m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -70,11 +70,11 @@ AUTH_USER_MODEL = 'accounts.Account'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tpay',
+        'NAME': 'test',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '3307',
+        'HOST': os.environ['DB_HOST_NAME'],
+        'PORT': '3306',
     }
 }
 

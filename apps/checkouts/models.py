@@ -10,7 +10,11 @@ from accounts.models import Account, Idm
 class CheckoutManager(models.Manager):
     def checkout(self, request_data):
 
-        purchaser = get_object_or_404(Idm, idm=request_data['idm']).account
+        try:
+            purchaser = Idm.objects.get(idm=request_data['idm']).account
+        except Idm.DoesNotExist:
+            raise ValueError(_('User auth failed'))
+
 
         checkout = self.model(
             amount=request_data['amount'],

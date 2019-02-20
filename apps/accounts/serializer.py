@@ -1,15 +1,22 @@
 from rest_framework import serializers
+from django.shortcuts import get_object_or_404
+
 from .models import Account, Idm
 
 
 class IdmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Idm
-        fields = ('idm', 'account')
+        fields = ('idm', 'name')
         extra_kwargs = {
             'idm': {'write_only': True},
-            'account': {'write_only': True},
         }
+
+    def create(self, validated_data):
+        account = get_object_or_404(Account, pk=self.context['request'].user.id)
+        obj = Idm.objects.create(**validated_data, account=account)
+        obj.save()
+        return obj
 
 
 class AccountSerializer(serializers.ModelSerializer):

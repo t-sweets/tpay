@@ -15,7 +15,6 @@ class CheckoutManager(models.Manager):
         except Idm.DoesNotExist:
             raise ValueError(_('User auth failed'))
 
-
         checkout = self.model(
             amount=request_data['amount'],
             payment_method=request_data['payment_method'],

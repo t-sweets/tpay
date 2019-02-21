@@ -49,7 +49,7 @@ class IdmView(generics.CreateAPIView):
 
 class AccountCheckoutViewSet(mixins.ListModelMixin,
                              mixins.RetrieveModelMixin,
-                             generics.GenericAPIView):
+                             viewsets.GenericViewSet):
     serializer_class = CheckoutSerializer
 
     def get_queryset(self):

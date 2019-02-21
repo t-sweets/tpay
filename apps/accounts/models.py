@@ -110,4 +110,5 @@ class Idm(models.Model):
         error_messages={
             'unique': _("This card is already registered"),
         },)
+    name = models.CharField(_('card name'), max_length=255, blank=True, null=True)
     account = models.ForeignKey(Account, verbose_name=_('account'), on_delete=models.CASCADE)

@@ -9,6 +9,7 @@ urlpatterns = [
             url(r'^accounts/', include('accounts.urls')),
             url(r'^merchants/', include('merchants.urls')),
             url(r'^checkouts/', include('checkouts.urls')),
+            url(r'^deposits/', include('deposits.urls')),
         ]))
     ])),
 ]

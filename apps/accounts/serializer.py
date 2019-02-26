@@ -7,7 +7,7 @@ from .models import Account, Idm
 class IdmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Idm
-        fields = ('idm', 'name')
+        fields = ('id', 'idm', 'name')
         extra_kwargs = {
             'idm': {'write_only': True},
         }

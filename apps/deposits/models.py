@@ -16,6 +16,7 @@ class DepositManager(models.Manager):
 
         deposit = self.model(
             amount=request_data['amount'],
+            merchant=request_data['merchant'],
             user=user,
         )
         Account.deposit(user.id, deposit.amount)

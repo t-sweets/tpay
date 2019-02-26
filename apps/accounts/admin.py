@@ -2,7 +2,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from .models import Account
+from .models import Account, Idm
 
 
 @admin.register(Account)
@@ -18,3 +18,8 @@ class AccountAdmin(UserAdmin):
     list_display = ('username', 'email', 'display_name', 'balance', 'is_staff')
     search_fields = ('username', 'display_name', 'email')
     filter_horizontal = ('groups', 'user_permissions')
+
+
+@admin.register(Idm)
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('id', 'idm', 'name')

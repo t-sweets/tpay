@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -69,6 +70,18 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    ...mapActions("app", ["getFelicaList"])
+  },
+  computed: {
+    ...mapState("pos", ["felicaList"])
+  },
+  async mounted() {
+    if (await this.getFelicaList()) {
+    } else {
+      this.$ons.notification.alert("エラーが発生しました");
+    }
   }
 };
 </script>

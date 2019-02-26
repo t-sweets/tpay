@@ -22,17 +22,19 @@
     <div class="history">
       <div class="header">最近のお支払い</div>
       <el-card class="history-card">
-        <div class="left">
-          <div style="background-color:red;width:70px; height:70px;"></div>
-        </div>
-        <div class="center">
-          <div class="date">2019年2月26日 11時17分</div>
-          <div class="title">Sweetsに支払い</div>
-          <div class="status">
-            <div class="payment-success">支払い完了</div>
+        <div @click="pushDetail(0)">
+          <div class="left">
+            <img src="~/static/t-sweets.png" width="70px" height="70px">
           </div>
+          <div class="center">
+            <div class="date">{{ dateString }}</div>
+            <div class="title">{{ topTitle }}に支払い</div>
+            <div class="status">
+              <div class="payment-success">支払い完了</div>
+            </div>
+          </div>
+          <div class="right">300円</div>
         </div>
-        <div class="right">300円</div>
       </el-card>
     </div>
   </v-ons-page>
@@ -41,7 +43,8 @@
 
 <script>
 import Cookie from "js-cookie";
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
+import detailPage from "~/pages/app/receiptDetailPage";
 
 export default {
   data() {
@@ -60,6 +63,10 @@ export default {
     };
   },
   methods: {
+    async pushDetail(index) {
+      await this.setDetailIndex(index);
+      this.$emit("push-page", detailPage);
+    },
     logout() {
       this.$ons.notification
         .confirm({
@@ -67,13 +74,34 @@ export default {
           message: "ログアウトしますか？"
         })
         .then(response => {
-          //   this.setAuth(null);
-          //   Cookie.remove("auth");
+          this.setAuth(null);
+          Cookie.remove("auth");
         });
-    }
+    },
+    ...mapActions("app", ["getCheckoutList"]),
+    ...mapMutations("app", ["setDetailIndex"])
   },
   computed: {
-    // ...mapState(["profile"])
+    topTitle() {
+      return this.checkoutList.length > 0
+        ? this.checkoutList[0].merchant
+        : null;
+    },
+    dateString() {
+      return this.checkoutList.length > 0
+        ? $nuxt.dateFormat(
+            new Date(this.checkoutList[0].created_time),
+            "YYYY/MM/DD hh:mm"
+          )
+        : null;
+    },
+    ...mapState(["profile"]),
+    ...mapState("app", ["checkoutList"])
+  },
+  async mounted() {
+    if (await this.getCheckoutList()) {
+    } else {
+    }
   }
 };
 </script>
@@ -129,22 +157,26 @@ export default {
     }
     .center {
       display: inline-block;
-      width: calc((95vw - 10px * 2) * 0.45);
+      width: calc((95vw - 10px * 2) * 0.5);
       height: 70px;
       vertical-align: top;
       .date {
+        text-align: left;
         font-size: 10px;
         color: rgb(102, 102, 102);
+        padding-left: 28px;
       }
       .title {
         font-size: 18px;
         margin: 2px auto;
+        padding-left: 10px;
       }
       .status {
         font-size: 12px;
-        padding: 5px 20px;
+        padding: 5px 20px 5px 20px;
         .payment-success {
           color: white;
+          width: 100px;
           background-color: rgb(53, 187, 0);
           border-radius: 20px;
         }

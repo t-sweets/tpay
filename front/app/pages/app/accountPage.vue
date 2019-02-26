@@ -27,6 +27,7 @@ import Cookie from "js-cookie";
 import { mapMutations, mapState } from "vuex";
 
 import felicaListPage from "~/pages/app/felicaListPage";
+import receiptPage from "~/pages/app/receiptPage";
 import settlementHistory from "~/pages/app/settlementHistory";
 
 export default {
@@ -39,7 +40,7 @@ export default {
         },
         {
           title: "レシート",
-          page: settlementHistory
+          page: receiptPage
         },
         {
           title: "レシート"

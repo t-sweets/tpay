@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^profile/$', AccountViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'patch': 'partial_update'})),
 
     url(r'^idm/$', IdmView.as_view({'post': 'create',
-                                    'get': 'retrieve',
+                                    'get': 'list',
                                     'put': 'update',
                                     'delete': 'destroy',
                                     'patch': 'partial_update'})),

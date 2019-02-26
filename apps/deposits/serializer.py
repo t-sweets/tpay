@@ -1,14 +1,17 @@
 from rest_framework import serializers
 
 from .models import Deposit
+from merchants.models import Merchant
 
 
 class DepositSerializer(serializers.ModelSerializer):
     idm = serializers.CharField(max_length=16, write_only=True)
+    merchant = serializers.StringRelatedField()
+    merchant_id = serializers.PrimaryKeyRelatedField(queryset=Merchant.objects.all(), write_only=True)
 
     class Meta:
         model = Deposit
-        fields = ('id', 'created_time', 'updated_time', 'amount', 'idm')
+        fields = ('id', 'created_time', 'amount', 'idm', 'merchant', 'merchant_id')
 
     def create(self, validated_data):
         validated_data['merchant'] = validated_data.pop('merchant_id', None)

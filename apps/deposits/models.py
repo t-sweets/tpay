@@ -1,5 +1,6 @@
 from django.db import models
-from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
+
 
 from common.models import BaseModel
 from accounts.models import Account, Idm
@@ -21,6 +22,8 @@ class DepositManager(models.Manager):
         )
         Account.deposit(user.id, deposit.amount)
         deposit.save()
+
+        return deposit
 
 
 class Deposit(BaseModel):

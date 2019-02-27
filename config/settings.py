@@ -72,8 +72,8 @@ DATABASES = {
         'NAME': 'test',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '3307',
+        'HOST': os.environ['DB_HOST_NAME'],
+        'PORT': '3306',
     }
 }
 

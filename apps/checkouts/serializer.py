@@ -3,11 +3,20 @@ from django.shortcuts import get_object_or_404
 
 from .models import Checkout
 from merchants.models import Merchant
+from media_upload.serializer import ImageSerializer
+
+
+class CheckoutMerchantSerializer(serializers.ModelSerializer):
+    icon = ImageSerializer()
+
+    class Meta:
+        model = Merchant
+        fields = ('name', 'icon')
 
 
 class CheckoutSerializer(serializers.ModelSerializer):
     idm = serializers.CharField(max_length=16, write_only=True)
-    merchant = serializers.StringRelatedField()
+    merchant = CheckoutMerchantSerializer(read_only=True)
     merchant_id = serializers.PrimaryKeyRelatedField(queryset=Merchant.objects.all(), write_only=True)
 
     class Meta:

@@ -3,8 +3,10 @@ import uuid
 import os
 from django.utils.translation import gettext_lazy as _
 
+from common.models import BaseModel
 
-class Image(models.Model):
+
+class Image(BaseModel):
     def get_image_path(self, filename):
         prefix = 'images/'
         name = uuid.uuid4().hex

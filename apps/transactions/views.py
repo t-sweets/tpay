@@ -12,7 +12,7 @@ class TransactionViewSet(viewsets.ViewSet):
         checkout_amout = Checkout.objects.all()
         return sorted(chain(deposit_amount, checkout_amout), key=lambda instance: instance.created_time)
 
-    def list(self):
+    def list(self, request):
         queryset = self.get_marge_queryset()
         serializer = TransactionSerializer(queryset, many=True)
         return Response(serializer.data)

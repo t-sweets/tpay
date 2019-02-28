@@ -39,5 +39,9 @@ class Checkout(BaseModel):
     payment_method = models.IntegerField(_('payment method'), choices=PAYMENT_METHOD_CHOICES)
     merchant = models.ForeignKey(Merchant, on_delete=models.PROTECT)
     purchaser = models.ForeignKey(Account, on_delete=models.PROTECT)
+    type = 'checkout'
 
     objects = CheckoutManager()
+
+    def cash_value(self):
+        return "{:,}".format(-self.amount)

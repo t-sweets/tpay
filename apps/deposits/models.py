@@ -30,5 +30,9 @@ class Deposit(BaseModel):
     amount = models.IntegerField(_('amount'))
     merchant = models.ForeignKey(Merchant, on_delete=models.PROTECT)
     user = models.ForeignKey(Account, on_delete=models.PROTECT)
+    type = 'deposit'
 
     objects = DepositManager()
+
+    def cash_value(self):
+        return "{:,}".format(self.amount)

@@ -7,12 +7,12 @@ from itertools import chain
 
 
 class TransactionViewSet(viewsets.ViewSet):
-    def get_marge_queryset(self):
-        deposit_amount = Deposit.objects.all()
-        checkout_amout = Checkout.objects.all()
-        return sorted(chain(deposit_amount, checkout_amout), key=lambda instance: instance.created_time)
+    def get_marge_queryset(self, request):
+        deposit = Deposit.objects.filter(user=request.user)
+        checkout = Checkout.objects.filter(purchaser=request.user)
+        return sorted(chain(deposit, checkout), key=lambda instance: instance.created_time)
 
     def list(self, request):
-        queryset = self.get_marge_queryset()
+        queryset = self.get_marge_queryset(request)
         serializer = TransactionSerializer(queryset, many=True)
         return Response(serializer.data)

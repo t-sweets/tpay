@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'checkouts',
     'common',
     'deposits',
-    'media_upload'
+    'media_upload',
+    'transactions'
 ]
 
 MIDDLEWARE = [

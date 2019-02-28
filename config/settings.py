@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'merchants',
     'checkouts',
     'common',
-    'deposits'
+    'deposits',
+    'media_upload'
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,12 @@ REST_FRAMEWORK = {
     ),
     'EXCEPTION_HANDLER': 'common.utils.t_pay_exception_handler'
 }
+
+# Media
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 
 # AUTHENTICATION_BACKENDS = (
 #     "django_python3_ldap.auth.LDAPBackend",

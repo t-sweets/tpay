@@ -44,12 +44,8 @@ export default {
           password: this.form.password
         })
       ) {
-        if (await this.getProfile()) {
-          Cookie.set("auth", this.auth.Authorization, { expires: 3 });
-          this.$router.push("/");
-        } else {
-          this.$ons.notification.alert("error");
-        }
+        Cookie.set("auth", this.auth.Authorization, { expires: 3 });
+        this.$router.push("/");
       } else {
         this.$alert("このユーザー名・パスワードは無効です", "認証エラー", {
           type: "error",

@@ -74,7 +74,7 @@ export default {
       vertical-align: bottom;
       width: 220px;
       height: 15px;
-      font-size: 6px;
+      font-size: 3px;
     }
     .right {
       display: inline-block;

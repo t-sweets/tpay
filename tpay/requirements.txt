@@ -7,4 +7,5 @@ Pillow==5.4.1
 PyJWT==1.7.1
 PyMySQL==0.9.3
 pytz==2018.9
-ulid==1.1
+ulid-py==0.0.9
+uWSGI==2.0.18

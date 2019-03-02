@@ -7,7 +7,20 @@
     <el-row class="menus" :gutter="0">
       <el-col v-for="menu in menus" :key="menu.id" :span="8" :offset="0">
         <div class="menu-item" @click="$emit('push-page', menu.page)">
-          <div class="item-icon"></div>
+          <div class="item-icon">
+            <font-awesome-icon
+              v-if="typeof menu.icon == 'object'"
+              class="card-icon"
+              :icon="menu.icon"
+            />
+            <img
+              style="margin-top:20px"
+              v-if="typeof menu.icon === 'string'"
+              :src="menu.icon"
+              width="50"
+              height="50"
+            >
+          </div>
           <div class="item-name">{{ menu.title }}</div>
         </div>
       </el-col>
@@ -36,14 +49,17 @@ export default {
       menus: [
         {
           title: "あなたの残高",
+          icon: ["fas", "receipt"],
           page: settlementHistory
         },
         {
           title: "レシート",
+          icon: require("~/assets/images/icons/icons8-receipt_terminal.svg"),
           page: receiptPage
         },
         {
-          title: "レシート"
+          title: "レシート",
+          icon: ["fas", "receipt"]
         }
       ]
     };

@@ -2,7 +2,7 @@
   <v-ons-page>
     <v-ons-tabbar :index.sync="activeIndex">
       <template slot="pages">
-        <main-page @push-page="pushPage($event)"></main-page>
+        <main-page ref="mainPage" @push-page="pushPage($event)"></main-page>
         <account-page @push-page="pushPage($event)"></account-page>
       </template>
 

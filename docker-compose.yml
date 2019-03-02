@@ -13,13 +13,13 @@ services:
     restart: always
 
   tpay:
-    build: .
-    command: sh -c "./wait-for-it.sh db:3306; python3 manage.py runserver 0.0.0.0:9000"
-    ports:
-      - "9000:9000"
+    build: tpay
     volumes:
-      - .:/app
+      - ./tpay:/app
     environment:
-      DB_HOST_NAME: db
+      MYSQL_DATABASE: test
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_HOSTNAME: db
     depends_on:
       - db

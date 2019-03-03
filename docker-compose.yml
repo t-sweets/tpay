@@ -20,10 +20,12 @@ services:
     build: nginx
     ports:
       - "8000:8000"
+      - "9000:9000"
     environment:
       UWSGI_HOST: tpay
     volumes:
       - ./tpay/static:/tpay_static
       - ./tpay/media:/tpay_media
+      - ./front/dist:/tpay_front
     depends_on:
       - tpay

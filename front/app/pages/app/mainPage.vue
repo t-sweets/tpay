@@ -4,7 +4,7 @@
       <el-card class="box-card">
         <div class="title">あなたの残高</div>
         <div class="price">
-          10,000
+          {{ profile.balance }}
           <span class="yen">円</span>
         </div>
       </el-card>
@@ -78,6 +78,7 @@ export default {
           Cookie.remove("auth");
         });
     },
+    ...mapActions(["getProfile"]),
     ...mapActions("app", ["getCheckoutList"]),
     ...mapMutations("app", ["setDetailIndex"])
   },
@@ -99,7 +100,7 @@ export default {
     ...mapState("app", ["checkoutList"])
   },
   async mounted() {
-    if (await this.getCheckoutList()) {
+    if ((await this.getProfile()) && (await this.getCheckoutList())) {
     } else {
     }
   }

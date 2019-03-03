@@ -6,7 +6,7 @@ export const state = () => ({
 });
 
 export const mutations = {
-    setFelicList(state, lists) {
+    setFelicaList(state, lists) {
         state.felicaList = lists;
     },
     setCheckoutList(state, lists) {
@@ -20,7 +20,7 @@ export const mutations = {
 }
 
 export const actions = {
-    async getFelicaList({state, commit, rootState}){
+    async getFelicaList({commit, rootState}){
         const response = await this.$axios({
             method: "GET",
             headers: {

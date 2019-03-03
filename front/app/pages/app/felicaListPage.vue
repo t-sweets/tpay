@@ -9,7 +9,7 @@
 
     <div>
       <v-ons-carousel swipeable overscrollable auto-scroll :index.sync="cardIndex">
-        <v-ons-carousel-item v-for="item in cardList" :key="item.id">
+        <v-ons-carousel-item v-for="item in felicaList" :key="item.id">
           <el-card class="box-card">
             <div class="title"></div>
             <div class="price">{{ item.name }}</div>
@@ -18,7 +18,7 @@
       </v-ons-carousel>
       <div class="dots">
         <span
-          v-for="(item, index) in cardList"
+          v-for="(item, index) in felicaList"
           :key="item.id"
           style="cursor: pointer"
           @click="cardIndex = index"
@@ -75,7 +75,7 @@ export default {
     ...mapActions("app", ["getFelicaList"])
   },
   computed: {
-    ...mapState("pos", ["felicaList"])
+    ...mapState("app", ["felicaList"])
   },
   async mounted() {
     if (await this.getFelicaList()) {

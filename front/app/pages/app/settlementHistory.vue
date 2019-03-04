@@ -8,3 +8,15 @@
     </v-ons-toolbar>
   </v-ons-page>
 </template>
+
+<script>
+import { mapActions } from "vuex";
+export default {
+  methods: {
+    ...mapActions("app", ["getTransaction"])
+  },
+  async mounted() {
+    await this.getTransaction();
+  }
+};
+</script>

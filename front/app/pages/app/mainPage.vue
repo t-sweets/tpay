@@ -1,5 +1,11 @@
 <template>
   <v-ons-page>
+    <v-ons-pull-hook :action="reload" @changestate="state = $event.state">
+      <span v-show="state === 'initial'">Pull to refresh</span>
+      <span v-show="state === 'preaction'">Release</span>
+      <span v-show="state === 'action'">Loading...</span>
+    </v-ons-pull-hook>
+
     <div class="container">
       <el-card class="box-card">
         <div class="title">あなたの残高</div>
@@ -33,7 +39,7 @@
               <div class="payment-success">支払い完了</div>
             </div>
           </div>
-          <div class="right">300円</div>
+          <div class="right">{{ amounts }}円</div>
         </div>
       </el-card>
     </div>
@@ -49,6 +55,7 @@ import detailPage from "~/pages/app/receiptDetailPage";
 export default {
   data() {
     return {
+      state: "initial",
       menus: [
         {
           title: "あなたの残高"
@@ -66,6 +73,22 @@ export default {
     async pushDetail(index) {
       await this.setDetailIndex(index);
       this.$emit("push-page", detailPage);
+    },
+    async reload(done) {
+      this.loading = this.$loading({
+        text: "Loading",
+        lock: false
+      });
+      if ((await this.getProfile()) && (await this.getCheckoutList())) {
+        if (done) done();
+        this.loading.close();
+      } else {
+        this.$ons.notification.alert({
+          title: "Error",
+          message: "情報の取得に失敗しました"
+        });
+        this.loading.close();
+      }
     },
     logout() {
       this.$ons.notification
@@ -85,7 +108,7 @@ export default {
   computed: {
     topTitle() {
       return this.checkoutList.length > 0
-        ? this.checkoutList[0].merchant
+        ? this.checkoutList[0].merchant.name
         : null;
     },
     dateString() {
@@ -96,18 +119,17 @@ export default {
           )
         : null;
     },
+    amounts() {
+      return this.checkoutList.length > 0 ? this.checkoutList[0].amount : null;
+    },
     ...mapState(["profile"]),
     ...mapState("app", ["checkoutList"])
   },
   async mounted() {
-    if ((await this.getProfile()) && (await this.getCheckoutList())) {
-    } else {
-    }
+    await this.reload();
   }
 };
 </script>
-
-
 
 <style lang="scss" scoped>
 .container {

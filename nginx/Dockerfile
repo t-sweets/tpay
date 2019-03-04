@@ -3,7 +3,6 @@ FROM nginx:1.15-alpine
 RUN rm -f /etc/nginx/conf.d/*
 
 COPY tpay_nginx.conf /etc/nginx/conf.d/tpay_nginx.conf
-COPY front_nginx.conf /etc/nginx/conf.d/front_nginx.conf
 COPY uwsgi_params /etc/nginx/uwsgi_params
 COPY docker-entrypoint.sh /usr/bin/
 

@@ -5,8 +5,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     url(r'^api/', include([
+        path('admin/', admin.site.urls),
         url(r'^v1/', include([
             url(r'^accounts/', include('accounts.urls')),
             url(r'^merchants/', include('merchants.urls')),

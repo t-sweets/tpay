@@ -8,9 +8,6 @@ class IdmSerializer(serializers.ModelSerializer):
     class Meta:
         model = Idm
         fields = ('id', 'idm', 'name')
-        extra_kwargs = {
-            'idm': {'write_only': True},
-        }
 
     def create(self, validated_data):
         account = get_object_or_404(Account, pk=self.context['request'].user.id)

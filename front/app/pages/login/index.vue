@@ -15,7 +15,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">Login</el-button>
-          <el-button type="text" @click="$router.push('register')">Regiter</el-button>
+          <el-button type="text" @click="$router.push('/register/')">Regiter</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -60,7 +60,8 @@ export default {
       return window.matchMedia("(max-width:1024px)").matches ? "top" : "left";
     },
     ...mapState(["auth", "profile"])
-  }
+  },
+  layout: "default"
 };
 </script>
 

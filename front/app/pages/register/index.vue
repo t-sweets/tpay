@@ -66,7 +66,8 @@ export default {
     labelPosition() {
       return window.matchMedia("(max-width:1024px)").matches ? "top" : "left";
     }
-  }
+  },
+  layout: "default"
 };
 </script>
 

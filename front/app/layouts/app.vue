@@ -55,5 +55,8 @@ ons-page {
     color: #4b9ad8;
   }
 }
+.tabbar {
+  background-color: #fff !important;
+}
 </style>
 

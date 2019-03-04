@@ -1,16 +1,21 @@
 export const state = () => ({
     felicaList: [],
     checkoutList: [],
+    transactionList:[],
 
     showDetailIndex: 0,
 });
 
 export const mutations = {
-    setFelicList(state, lists) {
+    setFelicaList(state, lists) {
         state.felicaList = lists;
     },
     setCheckoutList(state, lists) {
-        state.checkoutList = lists
+        state.checkoutList = lists.reverse()
+    },
+
+    setTransactionList(state, lists) {
+        state.transactionList = lists.reverse()
     },
 
     setDetailIndex(state, index) {
@@ -20,7 +25,7 @@ export const mutations = {
 }
 
 export const actions = {
-    async getFelicaList({state, commit, rootState}){
+    async getFelicaList({commit, rootState}){
         const response = await this.$axios({
             method: "GET",
             headers: {
@@ -60,6 +65,29 @@ export const actions = {
         // 正常に通信が完了し、なおかつtokenを持っている場合
         if (response.status == 200) {
             await commit("setCheckoutList", response.data);
+            return true
+        } else {
+            return false
+        }
+    },
+
+    async getTransaction({commit, rootState}) {
+        const response = await this.$axios({
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Origin": "*",
+                ...rootState.auth
+            },
+            url: process.env.API_HOST + "/transaction/"
+        })
+        .catch(err => {
+            return false
+        });
+
+        // 正常に通信が完了し、なおかつtokenを持っている場合
+        if (response.status == 200) {
+            await commit("setTransactionList", response.data);
             return true
         } else {
             return false

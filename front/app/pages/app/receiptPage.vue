@@ -18,7 +18,7 @@
             <img src="~/static/t-sweets.png" alt width="50px" height="50px">
           </div>
           <div class="center">
-            <div class="title">{{ item.merchant }}に支払い</div>
+            <div class="title">{{ item.merchant.name }}に支払い</div>
             <div class="status">
               <div class="payment-success">支払い完了</div>
             </div>
@@ -74,7 +74,10 @@ export default {
       vertical-align: bottom;
       width: 220px;
       height: 15px;
-      font-size: 6px;
+      font-size: 3px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .right {
       display: inline-block;

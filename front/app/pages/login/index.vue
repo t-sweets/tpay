@@ -6,7 +6,13 @@
         <el-button style="float: right; padding: 3px 0" type="text">Forget password</el-button>
       </div>
 
-      <el-form ref="form" :model="form" :label-position="labelPosition" label-width="180px">
+      <el-form
+        ref="form"
+        :model="form"
+        :label-position="labelPosition"
+        label-width="180px"
+        @submit.native.prevent="onSubmit"
+      >
         <el-form-item label="Name">
           <el-input type="text" v-model="form.name"></el-input>
         </el-form-item>
@@ -14,7 +20,7 @@
           <el-input type="password" v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">Login</el-button>
+          <el-button type="primary" native-type="submit">Login</el-button>
           <el-button type="text" @click="$router.push('/register/')">Regiter</el-button>
         </el-form-item>
       </el-form>
@@ -45,7 +51,7 @@ export default {
         })
       ) {
         Cookie.set("auth", this.auth.Authorization, { expires: 3 });
-        this.$router.push("/");
+        this.$route.params ? this.$router.push("/") : this.$router.push("/");
       } else {
         this.$alert("このユーザー名・パスワードは無効です", "認証エラー", {
           type: "error",

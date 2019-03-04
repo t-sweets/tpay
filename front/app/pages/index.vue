@@ -20,6 +20,8 @@
 <script>
 import mainPage from "~/pages/app/mainPage";
 import accountPage from "~/pages/app/accountPage";
+import registerIdmPage from "~/components/app/pages/registerIdmPage";
+import { mapState } from "vuex";
 
 export default {
   middleware: ["auth"],
@@ -45,10 +47,22 @@ export default {
       this.$emit("push-page", event);
     }
   },
+  computed: {
+    ...mapState("app/register-idm", ["idm"])
+  },
   components: {
     mainPage,
     accountPage
   },
-  layout: "app"
+  layout: "app",
+
+  mounted() {
+    // IDM登録のタスクがあれば
+    console.log(this.idm);
+
+    if (this.idm) {
+      this.$emit("push-page", registerIdmPage);
+    }
+  }
 };
 </script>

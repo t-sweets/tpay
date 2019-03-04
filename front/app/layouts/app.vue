@@ -58,5 +58,9 @@ ons-page {
 .tabbar {
   background-color: #fff !important;
 }
+
+.el-message-box {
+  width: 100% !important;
+}
 </style>
 

@@ -58,6 +58,11 @@ export default {
             this.$router.push("/");
           }
         });
+      } else {
+        this.$message({
+          type: "error",
+          message: "登録に失敗しました"
+        });
       }
     },
     ...mapActions(["register"])

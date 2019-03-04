@@ -8,17 +8,29 @@
     </v-ons-toolbar>
 
     <div>
-      <v-ons-carousel swipeable overscrollable auto-scroll :index.sync="cardIndex">
-        <v-ons-carousel-item v-for="item in felicaList" :key="item.id">
+      <v-ons-carousel
+        swipeable
+        overscrollable
+        auto-scroll
+        :index.sync="cardIndex"
+        v-if="felicaList.length > 0"
+      >
+        <v-ons-carousel-item v-for="item in showFelicLists" :key="item.id">
           <el-card class="box-card">
             <div class="title"></div>
             <div class="price">{{ item.name }}</div>
           </el-card>
         </v-ons-carousel-item>
       </v-ons-carousel>
+
+      <el-card v-else class="box-card">
+        <div class="title"></div>
+        <div class="no-registed">カードが登録されていません</div>
+      </el-card>
+
       <div class="dots">
         <span
-          v-for="(item, index) in felicaList"
+          v-for="(item, index) in showFelicLists"
           :key="item.id"
           style="cursor: pointer"
           @click="cardIndex = index"
@@ -29,19 +41,15 @@
     <v-ons-list>
       <v-ons-list-item modifier="longdivider">
         <div class="left">カード名</div>
-        <div class="center">{{ cardList[cardIndex].name }}</div>
+        <div class="center">{{ showFelicLists[cardIndex].name }}</div>
       </v-ons-list-item>
       <v-ons-list-item modifier="longdivider">
         <div class="left">IDm</div>
-        <div class="center">{{ cardList[cardIndex].idm }}</div>
-      </v-ons-list-item>
-      <v-ons-list-item modifier="longdivider">
-        <div class="left">最終利用日</div>
-        <div class="center">{{ cardList[cardIndex].lastDate }}</div>
+        <div class="center">{{ showFelicLists[cardIndex].idm }}</div>
       </v-ons-list-item>
     </v-ons-list>
     <br>
-    <v-ons-list>
+    <v-ons-list v-if="felicaList.length > 0">
       <v-ons-list-item tappable>
         <div class="center">
           <span style="color:red; margin:0 auto;">削除</span>
@@ -75,6 +83,11 @@ export default {
     ...mapActions("app", ["getFelicaList"])
   },
   computed: {
+    showFelicLists() {
+      return this.felicaList.length > 0
+        ? this.felicaList
+        : [{ name: "", idm: "" }];
+    },
     ...mapState("app", ["felicaList"])
   },
   async mounted() {
@@ -100,6 +113,11 @@ export default {
     .price {
       font-size: 20px;
       line-height: 130px;
+    }
+    .no-registed {
+      color: #666;
+      font-size: 15px;
+      line-height: 150px;
     }
   }
 

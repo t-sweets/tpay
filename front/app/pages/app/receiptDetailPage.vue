@@ -10,9 +10,9 @@
     <div class="detail-page">
       <div class="detail-body">
         <div class="store-icon">
-          <img src="~/static/t-sweets.png" alt width="100px" height="100px">
+          <img :src="storeIcon(getDetail.merchant.icon)" alt width="100px" height="100px">
         </div>
-        <div class="store-name">{{ getDetail.merchant }}に支払い</div>
+        <div class="store-name">{{ getDetail.merchant.name }}に支払い</div>
         <div class="payment-time">{{ paymentTime }}</div>
         <div class="payment-price">
           <span class="price">{{ getDetail.amount }}</span>
@@ -25,7 +25,7 @@
         <div class="details">
           <div class="detail">
             <div class="left">店舗名</div>
-            <div class="right">{{ getDetail.merchant }}</div>
+            <div class="right">{{ getDetail.merchant.name }}</div>
           </div>
           <div class="detail">
             <div class="left">決済番号</div>
@@ -44,6 +44,11 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 export default {
+  methods: {
+    storeIcon(url) {
+      return url ? url : require("~/assets/images/icons/shop-noimage.svg");
+    }
+  },
   computed: {
     paymentTime() {
       return $nuxt.dateFormat(

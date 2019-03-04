@@ -75,13 +75,19 @@ export default {
       this.$emit("push-page", detailPage);
     },
     async reload(done) {
+      this.loading = this.$loading({
+        text: "Loading",
+        lock: false
+      });
       if ((await this.getProfile()) && (await this.getCheckoutList())) {
         if (done) done();
+        this.loading.close();
       } else {
         this.$ons.notification.alert({
           title: "Error",
           message: "情報の取得に失敗しました"
         });
+        this.loading.close();
       }
     },
     logout() {
@@ -102,7 +108,7 @@ export default {
   computed: {
     topTitle() {
       return this.checkoutList.length > 0
-        ? this.checkoutList[0].merchant
+        ? this.checkoutList[0].merchant.name
         : null;
     },
     dateString() {

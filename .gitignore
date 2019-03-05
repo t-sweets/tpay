@@ -209,3 +209,6 @@ modules.xml
 
 # End of https://www.gitignore.io/api/django,intellij+all
 /db/
+
+# static style sheets
+/tpay/static/*

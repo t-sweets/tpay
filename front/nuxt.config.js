@@ -49,6 +49,7 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
+    '@nuxtjs/pwa',
     'nuxt-onsenui-module',
     'nuxt-fontawesome',
     '@nuxtjs/style-resources'
@@ -82,7 +83,34 @@ module.exports = {
       
     }
   },
-  server: {
-    port: 12000, // デフォルト: 3000
+  
+
+  /*
+   ** Generate configration 
+   */
+  generate: {
+    routes: [
+      '/login/',
+      '/logout/',
+      '/register/'
+    ],
+    subFolders: true
   },
+
+  /*
+   ** debug server configration
+   */
+  server: {
+    port: 12000, // default: 3000
+  },
+
+  /*
+   ** PWA manifest  
+   */
+  manifest: {
+    name: "T-Pay",
+    short_name: "tpay",
+    lang: 'ja',
+    display: "standalone"
+  }
 }

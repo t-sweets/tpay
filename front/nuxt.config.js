@@ -111,6 +111,7 @@ module.exports = {
     name: "T-Pay",
     short_name: "tpay",
     lang: 'ja',
-    display: "standalone"
+    display: "standalone",
+    background_color: "#fff",
   }
 }

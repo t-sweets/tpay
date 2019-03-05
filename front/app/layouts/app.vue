@@ -22,6 +22,11 @@ export default {
       if (event) this.pageStack.unshift(event);
       this.pageStack.splice(1, this.pageStack.length - 1);
     }
+  },
+  created() {
+    if (this.$ons.platform.isIPhoneX()) {
+      document.documentElement.setAttribute("onsflag-iphonex-portrait", "");
+    }
   }
 };
 </script>

@@ -35,7 +35,7 @@ export default {
           key: "homePage"
         },
         {
-          icon: "ion-home",
+          icon: "ion-person",
           label: "Account",
           key: "accountPage"
         }

@@ -15,7 +15,7 @@
             <div class="right">{{ toDateString(item.created_time) }}</div>
           </div>
           <div class="left">
-            <img src="~/static/t-sweets.png" alt width="50px" height="50px">
+            <img :src="storeIcon(item.merchant.icon)" alt width="50px" height="50px">
           </div>
           <div class="center">
             <div class="title">{{ item.merchant.name }}に支払い</div>
@@ -23,7 +23,7 @@
               <div class="payment-success">支払い完了</div>
             </div>
           </div>
-          <div class="right">{{ item.amount }}円</div>
+          <div class="right">{{ item.amount.slice(1) }}円</div>
         </div>
       </el-card>
     </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 import detailPage from "~/pages/app/receiptDetailPage";
 
 export default {
@@ -39,6 +39,11 @@ export default {
     return {};
   },
   methods: {
+    storeIcon(url) {
+      return url
+        ? process.env.API_HOST + "/../.." + url.image
+        : require("~/assets/images/icons/shop-noimage.svg");
+    },
     toDateString(date) {
       return $nuxt.dateFormat(new Date(date), "YYYY/MM/DD hh:mm");
     },
@@ -46,14 +51,14 @@ export default {
       await this.setDetailIndex(index);
       this.$emit("push-page", detailPage);
     },
-    ...mapActions("app", ["getCheckoutList"]),
+    ...mapActions("app", ["getTransaction"]),
     ...mapMutations("app", ["setDetailIndex"])
   },
   computed: {
-    ...mapState("app", ["checkoutList"])
+    ...mapGetters("app", ["checkoutList"])
   },
   async mounted() {
-    if (await this.getCheckoutList()) {
+    if (await this.getTransaction()) {
     } else {
     }
   }
@@ -112,6 +117,7 @@ export default {
     .status {
       font-size: 10px;
       padding: 2px 10px 2px 10px;
+      font-weight: 600;
       .payment-success {
         color: white;
         width: 70px;

@@ -52,7 +52,7 @@
 
 <script>
 import Cookie from "js-cookie";
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import detailPage from "~/pages/app/receiptDetailPage";
 
 export default {
@@ -71,7 +71,7 @@ export default {
         text: "Loading",
         lock: false
       });
-      if ((await this.getProfile()) && (await this.getCheckoutList())) {
+      if ((await this.getProfile()) && (await this.getTransaction())) {
         if (done) done();
         this.loading.close();
       } else {
@@ -83,7 +83,7 @@ export default {
       }
     },
     ...mapActions(["getProfile"]),
-    ...mapActions("app", ["getCheckoutList"]),
+    ...mapActions("app", ["getTransaction"]),
     ...mapMutations("app", ["setDetailIndex"])
   },
   computed: {
@@ -100,11 +100,16 @@ export default {
           )
         : null;
     },
+    storeIcon() {
+      return this.checkoutList.length > 0
+        ? process.env.API_HOST + "/../.." + this.checkoutList.image
+        : require("~/assets/images/icons/shop-noimage.svg");
+    },
     amounts() {
       return this.checkoutList.length > 0 ? this.checkoutList[0].amount : null;
     },
     ...mapState(["profile"]),
-    ...mapState("app", ["checkoutList"])
+    ...mapGetters("app", ["checkoutList"])
   },
   middleware: "auth",
   async mounted() {
@@ -122,13 +127,13 @@ export default {
     border-radius: 10px;
     .title {
       color: gray;
-      font-size: 16px;
+      font-size: 18px;
     }
     .price {
-      font-size: 30px;
-      line-height: 130px;
+      font-size: 45px;
+      line-height: 120px;
       .yen {
-        font-size: 14px;
+        font-size: 18px;
       }
     }
   }

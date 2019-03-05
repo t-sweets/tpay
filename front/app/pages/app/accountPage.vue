@@ -76,7 +76,7 @@ export default {
   methods: {
     pushButton(menu) {
       if (menu.page) {
-        $emit("push-page", menu.page);
+        this.$emit("push-page", menu.page);
       } else if (menu.click) {
         menu.click();
       }

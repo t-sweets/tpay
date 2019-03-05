@@ -28,7 +28,7 @@
     <div class="history">
       <div class="header">最近のお支払い</div>
       <el-card class="history-card">
-        <div @click="pushDetail(0)">
+        <div @click="pushDetail(0)" v-if="checkoutList.length > 0">
           <div class="left">
             <img src="~/static/t-sweets.png" width="70px" height="70px">
           </div>
@@ -40,6 +40,9 @@
             </div>
           </div>
           <div class="right">{{ amounts }}円</div>
+        </div>
+        <div v-else>
+          <p class="not-yet">取引がありません</p>
         </div>
       </el-card>
     </div>
@@ -55,18 +58,7 @@ import detailPage from "~/pages/app/receiptDetailPage";
 export default {
   data() {
     return {
-      state: "initial",
-      menus: [
-        {
-          title: "あなたの残高"
-        },
-        {
-          title: "レシート"
-        },
-        {
-          title: "レシート"
-        }
-      ]
+      state: "initial"
     };
   },
   methods: {
@@ -89,17 +81,6 @@ export default {
         });
         this.loading.close();
       }
-    },
-    logout() {
-      this.$ons.notification
-        .confirm({
-          title: "確認",
-          message: "ログアウトしますか？"
-        })
-        .then(response => {
-          this.setAuth(null);
-          Cookie.remove("auth");
-        });
     },
     ...mapActions(["getProfile"]),
     ...mapActions("app", ["getCheckoutList"]),
@@ -217,6 +198,11 @@ export default {
       contain: " ";
       clear: both;
     }
+  }
+  .not-yet {
+    color: #666;
+    font-size: 14px;
+    margin: 10px;
   }
 }
 

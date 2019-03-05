@@ -79,7 +79,7 @@ export const actions = {
                 "Access-Control-Allow-Origin": "*",
                 ...rootState.auth
             },
-            url: process.env.API_HOST + "/transaction/"
+            url: process.env.API_HOST + "/transactions/"
         })
         .catch(err => {
             return false

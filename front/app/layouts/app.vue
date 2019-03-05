@@ -44,6 +44,11 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+}
 
 *,
 *:before,

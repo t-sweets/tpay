@@ -27,14 +27,16 @@ export const actions = {
             }
         })
         .catch(err => {
-            return false
+            return err.response
         });
 
-        // 正常に通信が完了し、なおかつtokenを持っている場合
+        // 正常に通信が完了した場合
         if (response.status == 201) {
             return true
+        } else if (response.status == 400 && response.data.idm) {
+            return response.data.idm;
         } else {
-            return false
+            return null
         }
     }
 }

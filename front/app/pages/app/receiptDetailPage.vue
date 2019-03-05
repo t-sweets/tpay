@@ -12,14 +12,16 @@
         <div class="store-icon">
           <img :src="storeIcon(getDetail.merchant.icon)" alt width="100px" height="100px">
         </div>
-        <div class="store-name">{{ getDetail.merchant.name }}に支払い</div>
+        <div class="store-name">{{ titleStr(getDetail.type, getDetail.merchant.name) }}</div>
         <div class="payment-time">{{ paymentTime }}</div>
         <div class="payment-price">
-          <span class="price">{{ getDetail.amount }}</span>
+          <span
+            class="price"
+          >{{ getDetail.type == "checkout" ? getDetail.amount.slice(1) : getDetail.amount }}</span>
           <span class="yen">円</span>
         </div>
         <div class="status">
-          <div class="payment-success">支払い完了</div>
+          <div :class="getDetail.type">{{ toStatusStr(getDetail.type) }}</div>
         </div>
         <hr>
         <div class="details">
@@ -31,8 +33,12 @@
             <div class="left">決済番号</div>
             <div class="right" style="font-size: 10px;">{{ getDetail.id }}</div>
           </div>
-          <div class="detail">
+          <div class="detail" v-if="getDetail.type=='checkout'">
             <div class="left">支払い金額</div>
+            <div class="right" style="font-weight: bold;">{{ getDetail.amount.slice(1) }}円</div>
+          </div>
+          <div class="detail" v-else-if="getDetail.type=='deposit'">
+            <div class="left">チャージ金額</div>
             <div class="right" style="font-weight: bold;">{{ getDetail.amount }}円</div>
           </div>
         </div>
@@ -46,7 +52,25 @@ import { mapState, mapGetters } from "vuex";
 export default {
   methods: {
     storeIcon(url) {
-      return url ? url : require("~/assets/images/icons/shop-noimage.svg");
+      return url
+        ? process.env.API_HOST + "/../.." + url.image
+        : require("~/assets/images/icons/shop-noimage.svg");
+    },
+    titleStr(type, storename) {
+      switch (type) {
+        case "checkout":
+          return storename ? storename + "への支払い" : "お店への決済";
+        case "deposit":
+          return storename ? storename + "でチャージ" : "チャージ";
+      }
+    },
+    toStatusStr(type) {
+      switch (type) {
+        case "checkout":
+          return "支払い完了";
+        case "deposit":
+          return "チャージ完了";
+      }
     }
   },
   computed: {
@@ -122,11 +146,19 @@ export default {
     .status {
       font-size: 13px;
       margin-bottom: 25px;
-      .payment-success {
+      font-weight: bold;
+      .checkout {
         color: white;
         width: 100px;
         margin: 10px auto;
-        background-color: rgb(53, 187, 0);
+        background-color: rgb(0, 207, 10);
+        border-radius: 20px;
+      }
+      .deposit {
+        color: white;
+        width: 100px;
+        margin: 10px auto;
+        background-color: rgb(0, 140, 255);
         border-radius: 20px;
       }
     }

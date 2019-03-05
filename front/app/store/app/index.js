@@ -1,6 +1,6 @@
 export const state = () => ({
     felicaList: [],
-    checkoutList: [],
+    // checkoutList: [],
     transactionList:[],
 
     showDetailIndex: 0,
@@ -10,9 +10,9 @@ export const mutations = {
     setFelicaList(state, lists) {
         state.felicaList = lists;
     },
-    setCheckoutList(state, lists) {
-        state.checkoutList = lists.reverse()
-    },
+    // setCheckoutList(state, lists) {
+    //     state.checkoutList = lists.reverse()
+    // },
 
     setTransactionList(state, lists) {
         state.transactionList = lists.reverse()
@@ -48,28 +48,28 @@ export const actions = {
         }
     },
 
-    async getCheckoutList({state, commit, rootState}){
-        const response = await this.$axios({
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json;charset=UTF-8",
-                "Access-Control-Allow-Origin": "*",
-                ...rootState.auth
-            },
-            url: process.env.API_HOST + "/accounts/checkouts/"
-        })
-        .catch(err => {
-            return false
-        });
+    // async getCheckoutList({state, commit, rootState}){
+    //     const response = await this.$axios({
+    //         method: "GET",
+    //         headers: {
+    //             "Content-Type": "application/json;charset=UTF-8",
+    //             "Access-Control-Allow-Origin": "*",
+    //             ...rootState.auth
+    //         },
+    //         url: process.env.API_HOST + "/accounts/checkouts/"
+    //     })
+    //     .catch(err => {
+    //         return false
+    //     });
 
-        // 正常に通信が完了し、なおかつtokenを持っている場合
-        if (response.status == 200) {
-            await commit("setCheckoutList", response.data);
-            return true
-        } else {
-            return false
-        }
-    },
+    //     // 正常に通信が完了し、なおかつtokenを持っている場合
+    //     if (response.status == 200) {
+    //         await commit("setCheckoutList", response.data);
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    // },
 
     async getTransaction({commit, rootState}) {
         const response = await this.$axios({
@@ -97,7 +97,13 @@ export const actions = {
 }
 
 export const getters = {
+    checkoutList(state) {
+        return state.transactionList.filter(( value ) => {
+            return value.type == "checkout";
+        })
+    },
     getDetail(state) {
-        return state.checkoutList[state.showDetailIndex];
-    }
+        return state.transactionList[state.showDetailIndex];
+    },
+
 }

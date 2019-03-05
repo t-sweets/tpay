@@ -6,7 +6,7 @@
     </div>
     <el-row class="menus" :gutter="0">
       <el-col v-for="menu in menus" :key="menu.id" :span="8" :offset="0">
-        <div class="menu-item" @click="$emit('push-page', menu.page)">
+        <div class="menu-item" @click="pushButton(menu)">
           <div class="item-icon">
             <font-awesome-icon
               v-if="typeof menu.icon == 'object'"
@@ -48,23 +48,39 @@ export default {
     return {
       menus: [
         {
-          title: "あなたの残高",
-          icon: ["fas", "receipt"],
-          page: settlementHistory
-        },
-        {
           title: "レシート",
           icon: require("~/assets/images/icons/icons8-receipt_terminal.svg"),
           page: receiptPage
         },
         {
-          title: "レシート",
-          icon: ["fas", "receipt"]
+          title: "決済履歴",
+          icon: require("~/assets/images/icons/wallet.svg"),
+          page: settlementHistory
+        },
+        {
+          title: "個人間送金",
+          icon: require("~/assets/images/icons/sendmoney.svg"),
+          click: () => {
+            this.$alert(
+              "準備中です。もうしばらくお待ちください",
+              "Comming Soon!",
+              {
+                confirmButtonText: "OK"
+              }
+            );
+          }
         }
       ]
     };
   },
   methods: {
+    pushButton(menu) {
+      if (menu.page) {
+        $emit("push-page", menu.page);
+      } else if (menu.click) {
+        menu.click();
+      }
+    },
     logout() {
       this.$ons.notification
         .confirm({

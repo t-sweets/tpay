@@ -56,19 +56,28 @@ export default {
           if (action === "confirm") {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "Loading...";
-            if (await this.registerIdm({ name: this.form.name })) {
+            const responce = await this.registerIdm({ name: this.form.name });
+            if (responce === true) {
               instance.confirmButtonLoading = false;
               done();
               this.$message({
                 type: "success",
-                message: "登録が完了しました"
+                message: "登録が完了しました",
+                onClose: () => {
+                  this.router.push("/");
+                  this.$emit("pop-page");
+                }
               });
             } else {
               instance.confirmButtonLoading = false;
               done();
+              let errorMessage = "登録に失敗しました";
+              if (responce == "This card is already registered") {
+                errorMessage = "このカードは既に登録されています";
+              }
               this.$message({
                 type: "error",
-                message: "登録に失敗しました"
+                message: errorMessage
               });
             }
           }
@@ -82,7 +91,8 @@ export default {
         type: "warning"
       }).then(async () => {
         await this.resetIdm();
-        this.$emit("push-page", index);
+        this.$router.push("/");
+        this.$emit("pop-page");
       });
     },
     ...mapMutations("app/register-idm", ["resetIdm"]),

@@ -106,6 +106,7 @@ export default {
     ...mapState(["profile"]),
     ...mapState("app", ["checkoutList"])
   },
+  middleware: "auth",
   async mounted() {
     await this.reload();
   }

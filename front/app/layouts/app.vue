@@ -23,41 +23,11 @@ export default {
       this.pageStack.splice(1, this.pageStack.length - 1);
     }
   },
-  created() {
-    /* "passive" が使えるかどうかを検出 */
-    var passiveSupported = false;
-    try {
-      document.addEventListener(
-        "test",
-        null,
-        Object.defineProperty({}, "passive", {
-          get: function() {
-            passiveSupported = true;
-          }
-        })
-      );
-    } catch (err) {}
-
-    /* リスナーを登録 */
-    document.addEventListener(
-      "touchstart",
-      function listener(e) {
-        /* do something */
-        e.preventDefault();
-      },
-      passiveSupported ? { passive: false } : false
-    );
-    document.addEventListener(
-      "touchmove",
-      function listener(e) {
-        /* do something */
-        e.preventDefault();
-      },
-      passiveSupported ? { passive: false } : false
-    );
-
+  beforeMount() {
+    const html = document.documentElement;
     if (this.$ons.platform.isIPhoneX()) {
-      document.documentElement.setAttribute("onsflag-iphonex-portrait", "");
+      html.setAttribute("onsflag-iphonex-portrait", "");
+      html.setAttribute("onsflag-iphonex-landscape", "");
     }
   }
 };
@@ -75,9 +45,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-}
-html,
-body {
   overflow: hidden;
   height: 100%;
 }

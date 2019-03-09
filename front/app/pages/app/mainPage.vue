@@ -28,7 +28,7 @@
     <div class="history">
       <div class="header">最近のお支払い</div>
       <el-card class="history-card">
-        <div @click="pushDetail(0)" v-if="checkoutList.length > 0">
+        <div @click="pushDetail(topId)" v-if="checkoutList.length > 0">
           <div class="left">
             <img src="~/static/t-sweets.png" width="70px" height="70px">
           </div>
@@ -87,6 +87,9 @@ export default {
     ...mapMutations("app", ["setDetailIndex"])
   },
   computed: {
+    topId() {
+      return this.checkoutList.length > 0 ? this.checkoutList[0].index : null;
+    },
     topTitle() {
       return this.checkoutList.length > 0
         ? this.checkoutList[0].merchant.name
@@ -114,6 +117,7 @@ export default {
   middleware: "auth",
   async mounted() {
     await this.reload();
+    console.log(this.checkoutList);
   }
 };
 </script>
@@ -127,7 +131,7 @@ export default {
     border-radius: 10px;
     .title {
       color: gray;
-      font-size: 18px;
+      font-size: 17px;
     }
     .price {
       font-size: 45px;
@@ -177,7 +181,7 @@ export default {
         padding-left: 28px;
       }
       .title {
-        font-size: 18px;
+        font-size: 17px;
         margin: 2px auto;
         padding-left: 10px;
       }

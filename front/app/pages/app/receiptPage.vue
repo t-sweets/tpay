@@ -8,8 +8,8 @@
     </v-ons-toolbar>
 
     <div>
-      <el-card class="receipt-card" v-for="(item, index) in checkoutList" :key="item.id">
-        <div @click="pushDetail(index)">
+      <el-card class="receipt-card" v-for="item in checkoutList" :key="item.id">
+        <div @click="pushDetail(item.index)">
           <div class="header">
             <div class="left">決済番号&nbsp;{{item.id}}</div>
             <div class="right">{{ toDateString(item.created_time) }}</div>

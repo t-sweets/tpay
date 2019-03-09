@@ -1,11 +1,11 @@
 {
-  "name": "sweets-front-app",
+  "name": "t-pay",
   "version": "1.0.0",
-  "description": "Sweets front application.",
+  "description": "T-Pay front application.",
   "author": "sho",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "cross-env NODE_ENV=development HOST=0.0.0.0 PORT=12000 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"

@@ -94,12 +94,6 @@ export default {
 <style lang="scss" scoped>
 .detail-page {
   padding-top: 30px;
-  //   background: linear-gradient(
-  //     130deg,
-  //     rgba(0, 54, 255, 1) 0%,
-  //     rgba(0, 212, 255, 1) 35%,
-  //     rgba(255, 255, 255, 1) 100%
-  //   );
   height: 100%;
   .detail-body {
     width: 95vw;
@@ -118,6 +112,7 @@ export default {
       margin-left: calc(50vw - (110px + 5vw) / 2);
       position: absolute;
       img {
+        border-radius: 100%;
         margin: 4px 5px 5px 4px;
       }
     }

@@ -40,7 +40,8 @@ module.exports = {
   */
   plugins: [
     '~/plugins/element-ui',
-    '~/plugins/my-functions'
+    '~/plugins/my-functions',
+    '~/plugins/vue-lazyload'
   ],
 
   /*
@@ -48,7 +49,7 @@ module.exports = {
   */
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/dotenv',
+    ['@nuxtjs/dotenv',{ filename: '.env.production' }],
     '@nuxtjs/pwa',
     'nuxt-onsenui-module',
     'nuxt-fontawesome',

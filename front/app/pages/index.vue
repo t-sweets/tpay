@@ -58,8 +58,6 @@ export default {
 
   mounted() {
     // IDM登録のタスクがあれば
-    console.log(this.idm);
-
     if (this.idm) {
       this.$emit("push-page", registerIdmPage);
     }

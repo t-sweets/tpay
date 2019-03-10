@@ -1,6 +1,5 @@
 export const state = () => ({
     felicaList: [],
-    // checkoutList: [],
     transactionList:[],
 
     showDetailIndex: 0,
@@ -10,12 +9,14 @@ export const mutations = {
     setFelicaList(state, lists) {
         state.felicaList = lists;
     },
-    // setCheckoutList(state, lists) {
-    //     state.checkoutList = lists.reverse()
-    // },
-
     setTransactionList(state, lists) {
-        state.transactionList = lists.reverse()
+        if (lists.length > 0) {
+            lists = lists.reverse();
+            lists.forEach((item, index) => {
+                item.index = index
+            });
+        }
+        state.transactionList = lists
     },
 
     setDetailIndex(state, index) {

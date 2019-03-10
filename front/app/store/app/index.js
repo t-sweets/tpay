@@ -10,12 +10,12 @@ export const mutations = {
         state.felicaList = lists;
     },
     setTransactionList(state, lists) {
-        if (list.length > 0) {
+        if (lists.length > 0) {
             lists = lists.reverse();
-        lists.forEach((item, index) => {
-            item.index = index
-        });
-    }
+            lists.forEach((item, index) => {
+                item.index = index
+            });
+        }
         state.transactionList = lists
     },
 

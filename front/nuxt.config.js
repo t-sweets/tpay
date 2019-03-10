@@ -40,7 +40,8 @@ module.exports = {
   */
   plugins: [
     '~/plugins/element-ui',
-    '~/plugins/my-functions'
+    '~/plugins/my-functions',
+    '~/plugins/vue-lazyload'
   ],
 
   /*

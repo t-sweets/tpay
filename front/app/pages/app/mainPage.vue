@@ -117,7 +117,6 @@ export default {
   middleware: "auth",
   async mounted() {
     await this.reload();
-    console.log(this.checkoutList);
   }
 };
 </script>
@@ -181,7 +180,7 @@ export default {
         padding-left: 28px;
       }
       .title {
-        font-size: 17px;
+        font-size: 16px;
         margin: 2px auto;
         padding-left: 10px;
       }
@@ -200,6 +199,7 @@ export default {
       display: inline-block;
       width: calc((95vw - 10px * 2) * 0.25);
       text-align: right;
+      font-size: 15px;
       vertical-align: bottom;
     }
 

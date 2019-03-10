@@ -81,9 +81,9 @@ export default {
       display: inline-block;
       text-align: left;
       vertical-align: bottom;
-      width: 220px;
+      width: 65%;
       height: 15px;
-      font-size: 3px;
+      font-size: 10px;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -92,7 +92,7 @@ export default {
       display: inline-block;
       text-align: right;
       vertical-align: bottom;
-      width: 80px;
+      width: 30%;
       height: 15px;
       font-size: 10px;
     }

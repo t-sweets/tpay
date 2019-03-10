@@ -23,12 +23,18 @@ export default {
       this.pageStack.splice(1, this.pageStack.length - 1);
     }
   },
-  beforeMount() {
+  mounted() {
     const html = document.documentElement;
     if (this.$ons.platform.isIPhoneX()) {
       html.setAttribute("onsflag-iphonex-portrait", "");
-      html.setAttribute("onsflag-iphonex-landscape", "");
     }
+    document.addEventListener(
+      "touchmove",
+      function(e) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
   }
 };
 </script>

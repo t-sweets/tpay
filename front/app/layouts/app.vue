@@ -22,6 +22,19 @@ export default {
       if (event) this.pageStack.unshift(event);
       this.pageStack.splice(1, this.pageStack.length - 1);
     }
+  },
+  mounted() {
+    const html = document.documentElement;
+    if (this.$ons.platform.isIPhoneX()) {
+      html.setAttribute("onsflag-iphonex-portrait", "");
+    }
+    document.addEventListener(
+      "touchmove",
+      function(e) {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
   }
 };
 </script>
@@ -38,6 +51,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  overflow: hidden;
+  height: 100%;
 }
 
 *,

@@ -11,7 +11,7 @@ module.exports = {
     title: pkg.name,
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viweport-fit=cover' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
@@ -57,7 +57,7 @@ module.exports = {
 
   styleResources: {
     scss: [
-      '@/assets/sass/foundation/mixin/_index.scss'
+      '@/assets/sass/*/*/*'
     ]
   },
 
@@ -111,6 +111,8 @@ module.exports = {
     name: "T-Pay",
     short_name: "tpay",
     lang: 'ja',
-    display: "standalone"
+    display: "standalone",
+    background_color: "#ffffff",
+    viweport: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viweport-fit=cover',
   }
 }

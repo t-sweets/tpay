@@ -110,10 +110,14 @@ module.exports = {
    */
   manifest: {
     name: "T-Pay",
-    short_name: "tpay",
+    short_name: "T-Pay",
     lang: 'ja',
     display: "standalone",
+  },
+  meta: {
+    mobileAppIOS: true,
     background_color: "#ffffff",
     viweport: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viweport-fit=cover',
+    appleStatusBarStyle: "default"
   }
 }

@@ -73,6 +73,8 @@ export default {
   .header {
     color: #666;
     border-bottom: 1px solid #ddd;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
     .left {
       display: inline-block;
       text-align: left;
@@ -90,7 +92,7 @@ export default {
       vertical-align: bottom;
       width: 30%;
       height: 15px;
-      font-size: 10px;
+      font-size: 12px;
     }
   }
   .left {
@@ -98,6 +100,9 @@ export default {
     width: 50px;
     height: 50px;
     vertical-align: top;
+    img {
+      border-radius: 100%;
+    }
   }
   .center {
     display: inline-block;
@@ -110,9 +115,12 @@ export default {
     }
     .title {
       text-align: left;
-      font-size: 12px;
+      font-size: 15px;
       margin: 5px auto;
       padding-left: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .status {
       font-size: 10px;
@@ -144,7 +152,7 @@ export default {
 <style lang="scss">
 .receipt-card {
   .el-card__body {
-    padding: 0px 5px !important;
+    padding: 0px 0px 5px 0px !important;
   }
 }
 </style>

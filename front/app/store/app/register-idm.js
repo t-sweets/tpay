@@ -20,7 +20,7 @@ export const actions = {
                 "Access-Control-Allow-Origin": "*",
                 ...rootState.auth
             },
-            url: process.env.API_HOST + "/accounts/idm/",
+            url: process.env.API_HOST + "/accounts/idms/",
             data: {
                 idm: state.idm,
                 name: name

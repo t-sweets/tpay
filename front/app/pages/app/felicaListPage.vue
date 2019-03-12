@@ -55,7 +55,7 @@
     </v-ons-list>
     <br>
     <v-ons-list v-show="showFelicLists[0].name != ''">
-      <v-ons-list-item tappable>
+      <v-ons-list-item tappable @click="confirmDelete(showFelicLists[cardIndex].id)">
         <div class="center">
           <span style="color:red; margin:0 auto;">削除</span>
         </div>
@@ -89,7 +89,19 @@ export default {
     pushQRReaderPage() {
       this.$emit("push-page", qrReaderPage);
     },
-    ...mapActions("app", ["getFelicaList"])
+    confirmDelete(id) {
+      this.$ons.notification
+        .confirm({
+          title: "確認",
+          message: "このカードの登録を削除しますか？"
+        })
+        .then(async index => {
+          if (index == 1) {
+            await this.deleteFelicaCard(id);
+          }
+        });
+    },
+    ...mapActions("app", ["getFelicaList", "deleteFelicaCard"])
   },
   computed: {
     showFelicLists() {

@@ -53,7 +53,7 @@ class IdmView(mixins.CreateModelMixin,
         account = self.request.user
         idms = Idm.objects.filter(account=account)
         for idm in idms:
-            idm.idm = "**** **** **** " + idm.idm[11:15]
+            idm.idm = "**** **** **** " + idm.idm[12:16]
         return idms
 
 

@@ -64,7 +64,7 @@ export default {
                 type: "success",
                 message: "登録が完了しました",
                 onClose: () => {
-                  this.router.push("/");
+                  this.$router.push("/");
                   this.$emit("pop-page");
                 }
               });

@@ -118,7 +118,7 @@ module.exports = {
   meta: {
     mobileAppIOS: true,
     background_color: "#ffffff",
-    viweport: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viweport-fit=cover',
+    viweport: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover',
     appleStatusBarStyle: "default"
   }
 }

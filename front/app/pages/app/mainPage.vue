@@ -30,7 +30,7 @@
       <el-card class="history-card">
         <div @click="pushDetail(topId)" v-if="checkoutList.length > 0">
           <div class="left">
-            <img src="~/static/t-sweets.png" width="70px" height="70px">
+            <img :src="storeIcon" width="70px" height="70px">
           </div>
           <div class="center">
             <div class="date">{{ dateString }}</div>
@@ -105,7 +105,9 @@ export default {
     },
     storeIcon() {
       return this.checkoutList.length > 0
-        ? process.env.API_HOST + "/../.." + this.checkoutList.image
+        ? process.env.API_HOST +
+            "/../.." +
+            this.checkoutList[0].merchant.icon.image
         : require("~/assets/images/icons/shop-noimage.svg");
     },
     amounts() {
@@ -167,6 +169,9 @@ export default {
       display: inline-block;
       width: 70px;
       vertical-align: top;
+      img {
+        border-radius: 100%;
+      }
     }
     .center {
       display: inline-block;

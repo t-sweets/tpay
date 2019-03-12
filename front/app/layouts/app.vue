@@ -25,7 +25,7 @@ export default {
   },
   mounted() {
     const html = document.documentElement;
-    if (this.$ons.platform.isIPhoneX()) {
+    if (this.$ons.platform.isIPhoneX() && this.$route.params.standalone) {
       html.setAttribute("onsflag-iphonex-portrait", "");
     }
     document.addEventListener(

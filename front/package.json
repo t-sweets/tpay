@@ -25,7 +25,8 @@
     "nuxt-onsenui-module": "^1.0.0",
     "nuxt-sass-resources-loader": "^2.0.5",
     "sass-loader": "^7.1.0",
-    "vue-lazyload": "^1.2.6"
+    "vue-lazyload": "^1.2.6",
+    "vue-qrcode-reader": "^1.4.0"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

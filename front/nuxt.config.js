@@ -41,7 +41,8 @@ module.exports = {
   plugins: [
     '~/plugins/element-ui',
     '~/plugins/my-functions',
-    '~/plugins/vue-lazyload'
+    '~/plugins/vue-lazyload',
+    '~/plugins/vue-qrcode-reader'
   ],
 
   /*

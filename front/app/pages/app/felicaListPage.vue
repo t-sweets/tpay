@@ -5,6 +5,11 @@
         <v-ons-back-button></v-ons-back-button>
       </div>
       <div class="center">Felicaカード管理</div>
+      <div class="right">
+        <v-ons-toolbar-button @click="pushQRReaderPage">
+          <i class="el-icon-circle-plus-outline"></i>
+        </v-ons-toolbar-button>
+      </div>
     </v-ons-toolbar>
 
     <div>
@@ -49,7 +54,7 @@
       </v-ons-list-item>
     </v-ons-list>
     <br>
-    <v-ons-list v-if="felicaList.length > 0">
+    <v-ons-list v-show="showFelicLists[0].name != ''">
       <v-ons-list-item tappable>
         <div class="center">
           <span style="color:red; margin:0 auto;">削除</span>
@@ -61,6 +66,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import qrReaderPage from "~/pages/app/qrReaderPage";
 export default {
   data() {
     return {
@@ -80,6 +86,9 @@ export default {
     };
   },
   methods: {
+    pushQRReaderPage() {
+      this.$emit("push-page", qrReaderPage);
+    },
     ...mapActions("app", ["getFelicaList"])
   },
   computed: {
@@ -90,7 +99,7 @@ export default {
     },
     ...mapState("app", ["felicaList"])
   },
-  async mounted() {
+  async created() {
     if (await this.getFelicaList()) {
     } else {
       this.$ons.notification.alert("エラーが発生しました");

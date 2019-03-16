@@ -4,10 +4,7 @@ from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.join(BASE_DIR, 'apps'))
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+sys.path.append(os.path.join(BASE_DIR, '../apps'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -69,19 +66,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 AUTH_USER_MODEL = 'accounts.Account'
 
-# Database
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ['MYSQL_DATABASE'],
-        'USER': os.environ['MYSQL_USER'],
-        'PASSWORD': os.environ['MYSQL_PASSWORD'],
-        'HOST': os.environ['MYSQL_HOSTNAME'],
-        'PORT': '3306',
-    }
-}
-
 
 # Password validation
 
@@ -110,7 +94,7 @@ USE_L10N = True
 USE_TZ = True
 
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, '../locale'),
 )
 
 
@@ -136,10 +120,10 @@ REST_FRAMEWORK = {
 
 # Static and Media
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, "../static")
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
 MEDIA_URL = '/media/'
 
 # CORS Settings

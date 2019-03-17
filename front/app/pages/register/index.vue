@@ -5,7 +5,13 @@
         <span>Register</span>
       </div>
 
-      <el-form ref="form" :model="form" :label-position="labelPosition" label-width="180px">
+      <el-form
+        ref="form"
+        :model="form"
+        :label-position="labelPosition"
+        label-width="180px"
+        @submit.native.prevent="onSubmit"
+      >
         <el-form-item label="Name" required>
           <el-input v-model="form.name" placeholder="tagokentarou"></el-input>
         </el-form-item>
@@ -19,7 +25,7 @@
           <el-input type="text" v-model="form.nickname" placeholder="田胡研"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">Register</el-button>
+          <el-button type="primary" native-type="submit">Register</el-button>
           <el-button type="text" @click="$router.push('login')">Login</el-button>
         </el-form-item>
       </el-form>

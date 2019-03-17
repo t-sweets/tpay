@@ -6,7 +6,7 @@
       </div>
       <div class="center">決済履歴</div>
     </v-ons-toolbar>
-    <div>
+    <div class="settlement-list">
       <el-card class="receipt-card" v-for="(item, index) in transactionList" :key="item.id">
         <div @click="pushDetail(index)">
           <div class="header">
@@ -75,91 +75,95 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.receipt-card {
-  width: 95vw;
-  margin: 10px auto;
-  border-radius: 5px;
-  .header {
-    color: #666;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 2px;
-    margin-bottom: 5px;
+.settlement-list {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  .receipt-card {
+    width: 95vw;
+    margin: 10px auto;
+    border-radius: 5px;
+    .header {
+      color: #666;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 2px;
+      margin-bottom: 5px;
+      .left {
+        display: inline-block;
+        text-align: left;
+        vertical-align: bottom;
+        width: 65%;
+        height: 15px;
+        font-size: 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .right {
+        display: inline-block;
+        text-align: right;
+        vertical-align: bottom;
+        width: 30%;
+        height: 15px;
+        font-size: 12px;
+      }
+    }
     .left {
       display: inline-block;
-      text-align: left;
-      vertical-align: bottom;
-      width: 65%;
-      height: 15px;
-      font-size: 10px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
+      width: 50px;
+      height: 50px;
+      vertical-align: top;
+      img {
+        border-radius: 100%;
+      }
+    }
+    .center {
+      display: inline-block;
+      width: calc((95vw - 10px * 2) * 0.5);
+      height: 50px;
+      vertical-align: top;
+      .date {
+        font-size: 15px;
+        color: rgb(102, 102, 102);
+      }
+      .title {
+        text-align: left;
+        font-size: 12px;
+        margin: 5px auto;
+        padding-left: 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .status {
+        font-size: 10px;
+        padding: 2px 10px 2px 10px;
+        font-weight: 600;
+        .checkout {
+          color: white;
+          width: 70px;
+          background-color: rgb(53, 187, 0);
+          border-radius: 20px;
+        }
+        .deposit {
+          color: white;
+          width: 70px;
+          background-color: rgb(0, 140, 255);
+          border-radius: 20px;
+        }
+      }
     }
     .right {
       display: inline-block;
+      width: calc((95vw - 10px * 2) * 0.25);
       text-align: right;
       vertical-align: bottom;
-      width: 30%;
-      height: 15px;
-      font-size: 12px;
     }
-  }
-  .left {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    vertical-align: top;
-    img {
-      border-radius: 100%;
-    }
-  }
-  .center {
-    display: inline-block;
-    width: calc((95vw - 10px * 2) * 0.5);
-    height: 50px;
-    vertical-align: top;
-    .date {
-      font-size: 15px;
-      color: rgb(102, 102, 102);
-    }
-    .title {
-      text-align: left;
-      font-size: 12px;
-      margin: 5px auto;
-      padding-left: 10px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-    .status {
-      font-size: 10px;
-      padding: 2px 10px 2px 10px;
-      font-weight: 600;
-      .checkout {
-        color: white;
-        width: 70px;
-        background-color: rgb(53, 187, 0);
-        border-radius: 20px;
-      }
-      .deposit {
-        color: white;
-        width: 70px;
-        background-color: rgb(0, 140, 255);
-        border-radius: 20px;
-      }
-    }
-  }
-  .right {
-    display: inline-block;
-    width: calc((95vw - 10px * 2) * 0.25);
-    text-align: right;
-    vertical-align: bottom;
-  }
 
-  &::before,
-  &::after {
-    contain: " ";
-    clear: both;
+    &::before,
+    &::after {
+      contain: " ";
+      clear: both;
+    }
   }
 }
 </style>

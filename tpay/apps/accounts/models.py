@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from common.models import ULIDField
+from media_upload.models import Image
 import ulid
 
 
@@ -13,6 +14,8 @@ class AccountManager(BaseUserManager):
         now = timezone.now()
         if not request_data['username']:
             raise ValueError('Users must have an username.')
+        if 'display_name' not in request_data:
+            request_data['display_name'] = None
 
         user = self.model(
             username=request_data['username'],
@@ -60,11 +63,12 @@ class Account(AbstractBaseUser, PermissionsMixin):
             'unique': _("A user with that email already exists."),
         },
     )
-    display_name = models.CharField(_('display name'), max_length=30, blank=True)
+    display_name = models.CharField(_('display name'), max_length=30, blank=True, null=True)
     is_staff = models.BooleanField(_('staff status'), default=False)
     is_active = models.BooleanField(_('active'), default=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     balance = models.IntegerField(_('balance'), default=0)
+    icon = models.ForeignKey(Image, verbose_name=_('icon'), blank=True, null=True, on_delete=models.PROTECT)
 
     objects = AccountManager()
 

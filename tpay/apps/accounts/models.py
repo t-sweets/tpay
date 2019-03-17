@@ -19,6 +19,7 @@ class AccountManager(BaseUserManager):
             email=self.normalize_email(request_data['email']),
             is_active=True,
             last_login=now,
+            display_name=request_data['display_name']
         )
 
         user.set_password(request_data['password'])

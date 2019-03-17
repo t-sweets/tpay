@@ -28,13 +28,6 @@ export default {
     if (this.$ons.platform.isIPhoneX() && this.$route.query.standalone) {
       html.setAttribute("onsflag-iphonex-portrait", "");
     }
-    document.addEventListener(
-      "touchmove",
-      function(e) {
-        e.preventDefault();
-      },
-      { passive: false }
-    );
   }
 };
 </script>
@@ -53,6 +46,16 @@ html {
   box-sizing: border-box;
   overflow: hidden;
   height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 *,

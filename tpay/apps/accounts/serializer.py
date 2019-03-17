@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 
 from .models import Account, Idm
+from media_upload.serializer import ImageSerializer
 
 
 class IdmSerializer(serializers.ModelSerializer):
@@ -19,10 +20,11 @@ class IdmSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=False)
     balance = serializers.CharField(read_only=True)
+    icon = ImageSerializer()
 
     class Meta:
         model = Account
-        fields = ('username', 'email', 'display_name', 'balance', 'password')
+        fields = ('username', 'email', 'display_name', 'balance', 'password', 'icon')
 
     def create(self, validated_data):
         return Account.objects.create_user(request_data=validated_data)

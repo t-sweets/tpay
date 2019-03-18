@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'common',
     'deposits',
     'media_upload',
-    'transactions'
+    'transactions',
+    'transfer'
 ]
 
 MIDDLEWARE = [

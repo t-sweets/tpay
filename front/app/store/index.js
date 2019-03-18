@@ -43,7 +43,7 @@ export const actions = {
             url: process.env.API_HOST + "/accounts/register/"
         })
         .catch(err => {
-            return false
+            return err.response
         });
 
         if (response.status == 201) {
@@ -67,13 +67,15 @@ export const actions = {
             url: process.env.API_HOST + "/accounts/login/"
         })
         .catch(err => {
-            return false
+            return err.response
         });
 
         // 正常に通信が完了し、なおかつtokenを持っている場合
         if (response.status == 200 && response.data.token) {
             await commit("setAuth", `token ${response.data.token}`);
             return true
+        } else if (response.status == 400) {
+            return response.data
         } else {
             return false
         }
@@ -90,13 +92,15 @@ export const actions = {
             url: process.env.API_HOST + "/accounts/profile/"
         })
         .catch(err => {
-            return false
+            return err.response
         });
 
         // 正常に通信が完了し、なおかつtokenを持っている場合
         if (response.status == 200) {
             await commit("setProfile", response.data);
             return true
+        } else if (response.status == 400) {
+            return response.data.non_field_errors
         } else {
             return false
         }

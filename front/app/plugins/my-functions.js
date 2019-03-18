@@ -15,6 +15,15 @@ Vue.mixin({
             format = format.replace(/mm/g, ('0' + date.getMinutes()).slice(-2));
             format = format.replace(/ss/g, ('0' + date.getSeconds()).slice(-2));
             return format;
+        },
+
+        err_message: res => {
+            if (res === false && typeof res !== 'object') return "不明なエラーが発生しました";
+            let err_message = "";
+            Object.keys(res).forEach(key => {
+                err_message += `${res[key]}\n`
+            });
+            return err_message
         }
     }
 });

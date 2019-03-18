@@ -1,7 +1,7 @@
 <template>
   <v-ons-page>
     <div class="user-data">
-      <div class="userimage"></div>
+      <div class="userimage" @click="pushUserImage()"></div>
       <div class="user-name">{{ displayName }}</div>
     </div>
     <el-row class="menus" :gutter="0">
@@ -42,6 +42,7 @@ import { mapMutations, mapState } from "vuex";
 import felicaListPage from "~/pages/app/felicaListPage";
 import receiptPage from "~/pages/app/receiptPage";
 import settlementHistory from "~/pages/app/settlementHistory";
+import udpateProfile from "~/pages/app/updateProfile";
 
 export default {
   data() {
@@ -80,6 +81,13 @@ export default {
       } else if (menu.click) {
         menu.click();
       }
+    },
+    pushUserImage() {
+      this.$ons.openActionSheet({buttons:['プロフィールを編集', 'cancel'], title: 'プロフィール変更', cancelable: true, destructive: 1}).then(index => {
+        if (index === 0) {
+          this.$emit("push-page", udpateProfile);
+        }
+      })
     },
     logout() {
       this.$ons.notification

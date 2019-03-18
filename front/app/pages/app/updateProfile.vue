@@ -7,19 +7,19 @@
       <div class="center">プロフィール変更</div>
     </v-ons-toolbar>
 
-    <el-form ref="form" :model="form" label-width="120px">
+    <el-form ref="updateProfileForm" :model="form" label-width="120px" :rules="rules" @submit.native.prevent="onSubmit">
       <div class="user-data">
         <div class="userimage">
         </div>
       </div>
-      <el-form-item label="display name">
+      <el-form-item label="display name" prop="display name">
         <el-input type="text" v-model="form.display_name"></el-input>
       </el-form-item>
-      <el-form-item label="email" required>
+      <el-form-item label="email" required prop="email">
         <el-input type="email" v-model="form.email"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" native-type="submit" @click="onSubmit"> Update </el-button>
+        <el-button type="primary" native-type="submit"> Update </el-button>
       </el-form-item>
     </el-form>
 
@@ -37,21 +37,40 @@ export default {
         form: {
           display_name: '',
           email: ''
+        },
+        rules: {
+          email: [
+            {
+              required: true,
+              message: "メールアドレスを入力してください",
+              trigger: "blur"
+            },
+            {
+              type: "email",
+              message: "有効なメールアドレスを入力してください",
+              trigger: ["blur", "change"]
+            }
+          ]
         }
       }
   },
   methods: {
       async onSubmit() {
-        if (await this.updateProfile({
-          display_name: this.form.display_name,
-          email: this.form.email
-        })) {
-          this.$message({message: 'プロフィールを更新しました', type: 'success'});
-          this.$emit("pop-page");
-        } else {
-          this.$message({message: 'プロフィールを更新できませんでした', type: 'error'});
-          this.$emit("pop-page");
-        }
+          await this.$refs.updateProfileForm.validate(async valid => {
+              if (valid) {
+                  if (
+                    await this.updateProfile({
+                      display_name: this.form.display_name,
+                      email: this.form.email
+                    })
+                  ) {
+                      this.$message({message: "プロフィールを更新しました", type: "success"});
+                      this.$emit("pop-page");
+                  } else {
+                      this.$message({message: "プロフィールを更新できませんでした", type: "error"});
+                  }
+              }
+          });
       },
       ...mapActions(["updateProfile"])
   },

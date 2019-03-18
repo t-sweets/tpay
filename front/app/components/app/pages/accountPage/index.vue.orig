@@ -41,11 +41,17 @@
 import Cookie from "js-cookie";
 import { mapMutations, mapState } from "vuex";
 
+<<<<<<< HEAD:front/app/components/app/pages/accountPage/index.vue
 import felicaListPage from "~/components/app/pages/accountPage/felicaListPage";
 import receiptPage from "~/components/app/pages/purchases/receiptPage";
 import settlementHistory from "~/components/app/pages/purchases/settlementHistory";
 import updateProfile from "~/components/app/pages/accountPage/updateProfile";
+=======
+import felicaListPage from "~/pages/app/felicaListPage";
+import receiptPage from "~/pages/app/receiptPage";
+import settlementHistory from "~/pages/app/settlementHistory";
 import transferPage from "~/pages/app/transferPage";
+>>>>>>> WIP transfer front:front/app/pages/app/accountPage.vue
 
 export default {
   data() {

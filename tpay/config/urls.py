@@ -14,6 +14,7 @@ urlpatterns = [
             url(r'^deposits/', include('deposits.urls')),
             url(r'^media/', include('media_upload.urls')),
             url(r'^transactions/', include('transactions.urls')),
+            url(r'^transfer/', include('transfer.urls')),
         ]))
     ])),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

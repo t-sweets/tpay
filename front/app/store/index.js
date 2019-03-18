@@ -106,5 +106,29 @@ export const actions = {
         }
     },
 
+    async updateProfile({state, commit}, {display_name, email}) {
+        const response = await this.$axios({
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Access-Control-Allow-Origin": "*",
+                ...state.auth
+            },
+            data: {
+                display_name: display_name,
+                email: email
+            },
+            url: process.env.API_HOST + "/accounts/profile/"
+        }).catch(err => {
+            return false
+        });
 
+        // 正常に通信が完了し、なおかつtokenを持っている場合
+        if (response.status == 200) {
+            await commit("setProfile", response.data);
+            return true
+        } else {
+            return false
+        }
+    }
 }

@@ -7,16 +7,17 @@
       </div>
 
       <el-form
-        ref="form"
+        ref="loginForm"
         :model="form"
         :label-position="labelPosition"
         label-width="180px"
+        :rules="rules"
         @submit.native.prevent="onSubmit"
       >
-        <el-form-item label="Name">
+        <el-form-item label="Name" prop="name">
           <el-input type="text" v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="Password">
+        <el-form-item label="Password" prop="password">
           <el-input type="password" v-model="form.password"></el-input>
         </el-form-item>
         <el-form-item>
@@ -39,25 +40,51 @@ export default {
       form: {
         name: null,
         password: null
+      },
+      rules: {
+        name: [
+          {
+            required: true,
+            message: "LDAP名を入力してください",
+            trigger: "blur"
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: "パスワードを入力してください",
+            trigger: "blur"
+          }
+        ]
       }
     };
   },
   methods: {
     async onSubmit() {
-      if (
-        await this.login({
-          username: this.form.name,
-          password: this.form.password
-        })
-      ) {
-        Cookie.set("auth", this.auth.Authorization, { expires: 3 });
-        this.$route.params ? this.$router.push("/") : this.$router.push("/");
-      } else {
-        this.$alert("このユーザー名・パスワードは無効です", "認証エラー", {
-          type: "error",
-          confirmButtonText: "OK"
-        });
-      }
+      await this.$refs.loginForm.validate(async valid => {
+        if (valid) {
+          const res = await this.login({
+            username: this.form.name,
+            password: this.form.password
+          });
+          if (res === true) {
+            Cookie.set("auth", this.auth.Authorization, { expires: 3 });
+            this.$route.params
+              ? this.$router.push("/")
+              : this.$router.push("/");
+          } else {
+            this.$alert(this.$nuxt.err_message(res), "認証エラー", {
+              type: "error",
+              confirmButtonText: "OK"
+            });
+          }
+        } else {
+          this.$message({
+            type: "error",
+            message: "必要項目を入力してください"
+          });
+        }
+      });
     },
     ...mapActions(["login", "getProfile"])
   },

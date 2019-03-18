@@ -6,22 +6,23 @@
       </div>
 
       <el-form
-        ref="form"
+        ref="registerForm"
         :model="form"
+        :rules="rules"
         :label-position="labelPosition"
         label-width="180px"
         @submit.native.prevent="onSubmit"
       >
-        <el-form-item label="Name" required>
+        <el-form-item label="Name" prop="name" required>
           <el-input v-model="form.name" placeholder="tagokentarou"></el-input>
         </el-form-item>
-        <el-form-item label="Email" required>
+        <el-form-item label="Email" prop="email" required>
           <el-input type="email" v-model="form.email" placeholder="hogehoge@example.com"></el-input>
         </el-form-item>
-        <el-form-item label="Password" required>
+        <el-form-item label="Password" prop="password" required>
           <el-input type="password" v-model="form.password" placeholder="password"></el-input>
         </el-form-item>
-        <el-form-item label="Nickname" required>
+        <el-form-item label="Nickname" prop="nickname" required>
           <el-input type="text" v-model="form.nickname" placeholder="田胡研"></el-input>
         </el-form-item>
         <el-form-item>
@@ -44,32 +45,88 @@ export default {
         email: null,
         password: null,
         nickname: null
+      },
+      rules: {
+        name: [
+          {
+            required: true,
+            message: "LDAP名を入力してください",
+            trigger: "blur"
+          },
+          {
+            min: 3,
+            max: 10,
+            message: "LDAP名は３文字以上10文字以内で入力してください",
+            trigger: "blur"
+          }
+        ],
+        email: [
+          {
+            required: true,
+            message: "メールアドレスを入力してください",
+            trigger: "blur"
+          },
+          {
+            type: "email",
+            message: "有効なメールアドレスを入力してください",
+            trigger: ["blur", "change"]
+          }
+        ],
+        password: [
+          {
+            required: true,
+            message: "パスワードを入力してください",
+            trigger: "blur"
+          }
+        ],
+        nickname: [
+          {
+            required: true,
+            message: "ニックネームを入力してください",
+            trigger: "blur"
+          },
+          {
+            min: 3,
+            max: 10,
+            message: "ニックネームは３文字以上10文字以内で入力してください",
+            trigger: "blur"
+          }
+        ]
       }
     };
   },
   methods: {
     async onSubmit() {
-      if (
-        await this.register({
-          username: this.form.name,
-          email: this.form.email,
-          display_name: this.form.nickname,
-          password: this.form.password
-        })
-      ) {
-        this.$alert("ユーザー登録が完了しました", "登録完了", {
-          type: "success",
-          confirmButtonText: "OK",
-          callback: action => {
-            this.$router.push("/");
+      await this.$refs.registerForm.validate(async valid => {
+        if (valid) {
+          if (
+            await this.register({
+              username: this.form.name,
+              email: this.form.email,
+              display_name: this.form.nickname,
+              password: this.form.password
+            })
+          ) {
+            this.$alert("ユーザー登録が完了しました", "登録完了", {
+              type: "success",
+              confirmButtonText: "OK",
+              callback: action => {
+                this.$router.push("/");
+              }
+            });
+          } else {
+            this.$message({
+              type: "error",
+              message: "登録に失敗しました"
+            });
           }
-        });
-      } else {
-        this.$message({
-          type: "error",
-          message: "登録に失敗しました"
-        });
-      }
+        } else {
+          this.$message({
+            type: "error",
+            message: "必要項目を入力してください"
+          });
+        }
+      });
     },
     ...mapActions(["register"])
   },

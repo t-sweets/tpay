@@ -25,10 +25,10 @@
         </div>
       </el-col>
     </el-row>
-    <v-ons-list>
-      <v-ons-list-header></v-ons-list-header>
-      <v-ons-list-item modifier="chevron" tappable @click="pushFelicaPage">Felicaカードの管理</v-ons-list-item>
-      <v-ons-list-item modifier="chevron" tappable @click="logout">
+    <v-ons-list class="accounts-menu">
+      <v-ons-list-item modifier="chevron nodivider" tappable @click="pushFelicaPage">Felicaカードの管理</v-ons-list-item>
+      <v-ons-list-item modifier="chevron nodivider" tappable @click="pushPassChangePage">パスワード変更</v-ons-list-item>
+      <v-ons-list-item modifier="chevron nodivider" tappable @click="logout">
         <span style="color:red;">ログアウト</span>
       </v-ons-list-item>
     </v-ons-list>
@@ -42,6 +42,7 @@ import { mapMutations, mapState } from "vuex";
 import felicaListPage from "~/pages/app/felicaListPage";
 import receiptPage from "~/pages/app/receiptPage";
 import settlementHistory from "~/pages/app/settlementHistory";
+import changePassword from "@/components/app/pages/passwordChangePage";
 
 export default {
   data() {
@@ -49,7 +50,7 @@ export default {
       menus: [
         {
           title: "レシート",
-          icon: require("~/assets/images/icons/icons8-receipt_terminal.svg"),
+          icon: require("~/assets/images/icons/receipt.svg"),
           page: receiptPage
         },
         {
@@ -97,6 +98,15 @@ export default {
     },
     pushFelicaPage() {
       this.$emit("push-page", felicaListPage);
+    },
+    pushPassChangePage() {
+      this.$emit("push-page", {
+        extends: changePassword,
+        onsNavigatorOptions: {
+          animation: "lift",
+          animationOptions: { duration: 0.5 }
+        }
+      });
     },
     ...mapMutations(["setAuth"])
   },
@@ -150,5 +160,9 @@ export default {
       background: #ddd;
     }
   }
+}
+.accounts-menu {
+  margin-top: 20px;
+  background-image: none;
 }
 </style>

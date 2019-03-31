@@ -101,7 +101,7 @@ export default {
     margin: 0 auto;
     margin-top: 30px;
     border-radius: 5px;
-    box-shadow: 10px #000;
+    filter: drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.2));
     .store-icon {
       width: 110px;
       height: 110px;

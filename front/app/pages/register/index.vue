@@ -20,7 +20,7 @@
           <el-input type="email" v-model="form.email" placeholder="hogehoge@example.com"></el-input>
         </el-form-item>
         <el-form-item label="Password" prop="password" required>
-          <el-input type="password" v-model="form.password" placeholder="password"></el-input>
+          <el-input v-model="form.password" placeholder="password" autocomplete="off" show-password></el-input>
         </el-form-item>
         <el-form-item label="Nickname" prop="nickname" required>
           <el-input type="text" v-model="form.nickname" placeholder="田胡研"></el-input>

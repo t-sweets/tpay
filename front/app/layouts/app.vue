@@ -65,16 +65,46 @@ body {
   margin: 0;
 }
 
+ons-navigator {
+  background-image: url("~assets/images/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 ons-page {
   text-align: center;
-}
-.toolbar {
-  .toolbar__title {
-    color: #4b9ad8;
+
+  // Color theme setting
+  .page__background {
+    // background-color: #fff;
+    background-image: url("~assets/images/background.png");
+    background-size: cover;
+    background-color: transparent;
+  }
+  ons-toolbar {
+    background-color: #fff !important;
+  }
+  .toolbar {
+    .toolbar__title {
+      color: #4b9ad8;
+    }
+  }
+
+  ons-tab {
+    .tabbar__button {
+      color: #999;
+    }
+    :checked + .tabbar__button {
+      color: #04a3e4;
+    }
   }
 }
 .tabbar {
   background-color: #fff !important;
+  // background-color: transparent !important;
+  // background-image: none;
+  // backdrop-filter: blur(3px);
+  // -webkit-backdrop-filter: blur(3px);
 }
 
 .el-message-box {

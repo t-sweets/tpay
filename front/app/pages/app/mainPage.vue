@@ -126,10 +126,13 @@ export default {
 <style lang="scss" scoped>
 .container {
   .box-card {
-    width: 90vw;
-    height: 53vw;
+    width: calc(90px * 4);
+    height: calc(53px * 4);
     margin: 20px auto;
     border-radius: 10px;
+    background-image: url("~assets/images/t-pay-card.png");
+    background-size: cover;
+    background-repeat: no-repeat;
     .title {
       color: gray;
       font-size: 17px;
@@ -154,6 +157,8 @@ export default {
   }
 }
 .history {
+  margin: 0 auto;
+  max-width: 1000px;
   margin-top: 50px; // transfer hidden
   .header {
     font-size: 14px;
@@ -162,8 +167,8 @@ export default {
     margin: 5px 30px;
   }
   .history-card {
-    width: 95vw;
-    margin: 0 auto;
+    // width: 95vw;
+    margin: 0 5px;
     border-radius: 5px;
     .left {
       display: inline-block;

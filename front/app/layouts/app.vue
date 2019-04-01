@@ -2,13 +2,15 @@
   <v-ons-navigator
     swipeable
     :page-stack="pageStack"
-    @push-page="pushPage($event)"
+    @push-page="pageStack.push($event)"
     @pop-page="popPage($event)"
+    @reset-page="resetPage($event)"
   ></v-ons-navigator>
 </template>
 
 <script>
 import index from "~/pages/";
+import login from "~/pages/login";
 
 export default {
   // middleware: ["authenticated"],
@@ -18,14 +20,18 @@ export default {
     };
   },
   methods: {
-    pushPage(event) {
-      console.log(this.pageStack);
-
-      this.pageStack.push(event);
-    },
     popPage(event) {
       if (event) this.pageStack.unshift(event);
       this.pageStack.splice(this.pageStack.length - 1, 1);
+    },
+    eventPage(event) {
+      if (!event) return false;
+      this.pageStack = [event];
+    }
+  },
+  created() {
+    if (this.$route.name == "login") {
+      this.pageStack = [login];
     }
   },
   mounted() {

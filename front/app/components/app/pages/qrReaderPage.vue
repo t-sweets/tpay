@@ -22,7 +22,7 @@
 <script>
 import { QrcodeCapture } from "vue-qrcode-reader";
 import { mapMutations } from "vuex";
-import registerIdmPage from "~/components/app/pages/registerIdmPage";
+import registerIdmPage from "@/components/app/pages/registerIdmPage";
 export default {
   data() {
     return {

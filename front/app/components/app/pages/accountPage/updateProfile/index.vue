@@ -16,7 +16,11 @@
           :show-file-list="false"
           :on-change="submitIcon"
         >
-          <img v-if="profile.icon.image != null" :src="iconURL" class="product-image">
+          <img
+            v-if="profile.icon != null && profile.icon.image != null"
+            :src="iconURL"
+            class="product-image"
+          >
           <i v-else class="el-icon-plus product-image-uploader-icon"></i>
         </el-upload>
       </div>

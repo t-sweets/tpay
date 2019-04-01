@@ -94,7 +94,13 @@ export default {
     },
     ...mapState(["auth", "profile"])
   },
-  layout: "app"
+  layout: "app",
+  mounted() {
+    const html = document.documentElement;
+    if (this.$ons.platform.isIPhoneX() && this.$route.query.standalone) {
+      html.setAttribute("onsflag-iphonex-portrait", "");
+    }
+  }
 };
 </script>
 

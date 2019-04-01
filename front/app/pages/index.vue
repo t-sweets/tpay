@@ -57,6 +57,11 @@ export default {
   layout: "app",
 
   mounted() {
+    const html = document.documentElement;
+    if (this.$ons.platform.isIPhoneX() && this.$route.query.standalone) {
+      html.setAttribute("onsflag-iphonex-portrait", "");
+    }
+
     // IDM登録のタスクがあれば
     if (this.idm) {
       this.$emit("push-page", registerIdmPage);

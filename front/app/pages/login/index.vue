@@ -71,13 +71,7 @@ export default {
           });
           if (res === true) {
             Cookie.set("auth", this.auth.Authorization, { expires: 3 });
-            switch (this.$route.params.method) {
-              case "register":
-                this.$emit("pop-page", registerIDM);
-                break;
-              default:
-                this.$emit("pop-page", index);
-            }
+            this.$emit("pop-page", index);
           } else {
             this.$alert(this.$nuxt.err_message(res), "認証エラー", {
               type: "error",

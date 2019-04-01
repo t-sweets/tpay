@@ -1,7 +1,9 @@
 <template>
   <v-ons-page>
     <div class="user-data">
-      <div class="userimage" @click="pushUserImage()"></div>
+      <div class="userimage" @click="pushUserImage()">
+        <img :src="icon" at="user-icon">
+      </div>
       <div class="user-name">{{ displayName }}</div>
     </div>
     <el-row class="menus" :gutter="0">
@@ -25,8 +27,8 @@
         </div>
       </el-col>
     </el-row>
+    <br>
     <v-ons-list>
-      <v-ons-list-header></v-ons-list-header>
       <v-ons-list-item modifier="chevron" tappable @click="pushFelicaPage">Felicaカードの管理</v-ons-list-item>
       <v-ons-list-item modifier="chevron" tappable @click="logout">
         <span style="color:red;">ログアウト</span>
@@ -50,7 +52,7 @@ export default {
       menus: [
         {
           title: "レシート",
-          icon: require("~/assets/images/icons/icons8-receipt_terminal.svg"),
+          icon: require("~/assets/images/icons/receipt.svg"),
           page: receiptPage
         },
         {
@@ -83,11 +85,7 @@ export default {
       }
     },
     pushUserImage() {
-      this.$ons.openActionSheet({buttons:['プロフィールを編集', 'cancel'], title: 'プロフィール変更', cancelable: true, destructive: 1}).then(index => {
-        if (index === 0) {
-          this.$emit("push-page", udpateProfile);
-        }
-      })
+      this.$emit("push-page", udpateProfile);
     },
     logout() {
       this.$ons.notification
@@ -114,6 +112,11 @@ export default {
         ? this.profile.display_name
         : this.profile.username;
     },
+    icon() {
+      return this.profile.icon.image
+        ? this.profile.icon.image
+        : require("@/assets/images/icons/guest_icon.svg");
+    },
     ...mapState(["profile"])
   }
 };
@@ -132,6 +135,13 @@ export default {
     border-radius: 100%;
     margin: 0 auto;
     background: gray;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+      border: 1px solid #4b9ad8;
+    }
   }
   .user-name {
     margin: 10px;

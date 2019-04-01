@@ -113,7 +113,7 @@ export default {
         : this.profile.username;
     },
     icon() {
-      return this.profile.icon.image
+      return this.profile.icon && this.profile.icon.image
         ? this.profile.icon.image
         : require("@/assets/images/icons/guest_icon.svg");
     },

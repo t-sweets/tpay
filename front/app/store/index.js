@@ -121,7 +121,7 @@ export const actions = {
             data: {
                 display_name: display_name,
                 email: email,
-                icon: icon_id
+                icon_id: icon_id
             },
             url: process.env.API_HOST + "/accounts/profile/"
         }).catch(err => {

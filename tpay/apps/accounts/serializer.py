@@ -32,6 +32,8 @@ class AccountSerializer(serializers.ModelSerializer):
         return Account.objects.create_user(request_data=validated_data)
 
     def update(self, instance, validated_data):
+        if 'icon_id' in validated_data:
+            validated_data['icon'] = validated_data.pop('icon_id', None)
         if 'password' in validated_data:
             instance.set_password(validated_data['password'])
         else:

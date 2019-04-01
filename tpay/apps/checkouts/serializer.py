@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from .models import Checkout
 from merchants.models import Merchant
 from media_upload.serializer import ImageSerializer
+from accounts.models import Account
 
 
 class CheckoutMerchantSerializer(serializers.ModelSerializer):
@@ -14,14 +15,22 @@ class CheckoutMerchantSerializer(serializers.ModelSerializer):
         fields = ('name', 'icon')
 
 
+class CheckoutAccountSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Account
+        fields = ('display_name', 'balance')
+
+
 class CheckoutSerializer(serializers.ModelSerializer):
     idm = serializers.CharField(max_length=16, write_only=True)
     merchant = CheckoutMerchantSerializer(read_only=True)
+    purchaser = CheckoutAccountSerializer(read_only=True)
     merchant_id = serializers.PrimaryKeyRelatedField(queryset=Merchant.objects.all(), write_only=True)
 
     class Meta:
         model = Checkout
-        fields = ('id', 'created_time', 'amount', 'merchant', 'merchant_id', 'idm', 'payment_method')
+        fields = ('id', 'created_time', 'amount', 'merchant', 'merchant_id', 'idm', 'payment_method', 'purchaser')
         extra_kwargs = {
             'payment_method': {'write_only': True},
         }

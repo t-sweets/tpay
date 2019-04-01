@@ -15,6 +15,8 @@ class CheckoutManager(models.Manager):
         except Idm.DoesNotExist:
             raise ValueError(_('User auth failed'))
 
+        purchaser = Account.withdraw(purchaser.id, request_data['amount'])
+
         checkout = self.model(
             amount=request_data['amount'],
             payment_method=request_data['payment_method'],
@@ -22,7 +24,6 @@ class CheckoutManager(models.Manager):
             purchaser=purchaser,
         )
 
-        Account.withdraw(purchaser.id, checkout.amount)
         checkout.save()
 
         return checkout

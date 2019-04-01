@@ -1,7 +1,9 @@
 <template>
   <v-ons-page>
     <div class="user-data">
-      <div class="userimage"></div>
+      <div class="userimage" @click="pushUserImage()">
+        <img :src="icon" at="user-icon">
+      </div>
       <div class="user-name">{{ displayName }}</div>
     </div>
     <el-row class="menus" :gutter="0">
@@ -25,10 +27,10 @@
         </div>
       </el-col>
     </el-row>
-    <v-ons-list class="accounts-menu">
-      <v-ons-list-item modifier="chevron nodivider" tappable @click="pushFelicaPage">Felicaカードの管理</v-ons-list-item>
-      <v-ons-list-item modifier="chevron nodivider" tappable @click="pushPassChangePage">パスワード変更</v-ons-list-item>
-      <v-ons-list-item modifier="chevron nodivider" tappable @click="logout">
+    <br>
+    <v-ons-list>
+      <v-ons-list-item modifier="chevron" tappable @click="pushFelicaPage">Felicaカードの管理</v-ons-list-item>
+      <v-ons-list-item modifier="chevron" tappable @click="logout">
         <span style="color:red;">ログアウト</span>
       </v-ons-list-item>
     </v-ons-list>
@@ -42,7 +44,7 @@ import { mapMutations, mapState } from "vuex";
 import felicaListPage from "~/pages/app/felicaListPage";
 import receiptPage from "~/pages/app/receiptPage";
 import settlementHistory from "~/pages/app/settlementHistory";
-import changePassword from "@/components/app/pages/passwordChangePage";
+import udpateProfile from "~/pages/app/updateProfile";
 
 export default {
   data() {
@@ -82,6 +84,9 @@ export default {
         menu.click();
       }
     },
+    pushUserImage() {
+      this.$emit("push-page", udpateProfile);
+    },
     logout() {
       this.$ons.notification
         .confirm({
@@ -99,15 +104,6 @@ export default {
     pushFelicaPage() {
       this.$emit("push-page", felicaListPage);
     },
-    pushPassChangePage() {
-      this.$emit("push-page", {
-        extends: changePassword,
-        onsNavigatorOptions: {
-          animation: "lift",
-          animationOptions: { duration: 0.5 }
-        }
-      });
-    },
     ...mapMutations(["setAuth"])
   },
   computed: {
@@ -115,6 +111,11 @@ export default {
       return this.profile.display_name
         ? this.profile.display_name
         : this.profile.username;
+    },
+    icon() {
+      return this.profile.icon.image
+        ? this.profile.icon.image
+        : require("@/assets/images/icons/guest_icon.svg");
     },
     ...mapState(["profile"])
   }
@@ -134,6 +135,13 @@ export default {
     border-radius: 100%;
     margin: 0 auto;
     background: gray;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+      border: 1px solid #4b9ad8;
+    }
   }
   .user-name {
     margin: 10px;
@@ -160,9 +168,5 @@ export default {
       background: #ddd;
     }
   }
-}
-.accounts-menu {
-  margin-top: 20px;
-  background-image: none;
 }
 </style>

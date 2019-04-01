@@ -2,7 +2,7 @@
   <v-ons-navigator
     swipeable
     :page-stack="pageStack"
-    @push-page="pageStack.push($event)"
+    @push-page="pushPage($event)"
     @pop-page="popPage($event)"
   ></v-ons-navigator>
 </template>
@@ -18,9 +18,14 @@ export default {
     };
   },
   methods: {
+    pushPage(event) {
+      console.log(this.pageStack);
+
+      this.pageStack.push(event);
+    },
     popPage(event) {
       if (event) this.pageStack.unshift(event);
-      this.pageStack.splice(1, this.pageStack.length - 1);
+      this.pageStack.splice(this.pageStack.length - 1, 1);
     }
   },
   mounted() {
@@ -71,6 +76,7 @@ ons-navigator {
   background-repeat: no-repeat;
 }
 
+$blue-color: #04a3e4;
 ons-page {
   text-align: center;
 
@@ -85,8 +91,16 @@ ons-page {
     background-color: #fff !important;
   }
   .toolbar {
+    .back-button,
+    .toolbar-button,
     .toolbar__title {
-      color: #4b9ad8;
+      color: $blue-color;
+    }
+    .toolbar__title {
+      font-weight: 600;
+    }
+    .back-button__icon {
+      fill: $blue-color;
     }
   }
 
@@ -95,7 +109,7 @@ ons-page {
       color: #999;
     }
     :checked + .tabbar__button {
-      color: #04a3e4;
+      color: $blue-color;
     }
   }
 }

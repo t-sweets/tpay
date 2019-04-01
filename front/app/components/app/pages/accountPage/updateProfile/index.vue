@@ -56,8 +56,8 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import updateDisplayName from "@/components/app/pages/updateProfile/updateDisplayName";
-import updateEmail from "@/components/app/pages/updateProfile/updateEmail";
+import updateDisplayName from "@/components/app/pages/accountPage/updateProfile/updateDisplayName";
+import updateEmail from "@/components/app/pages/accountPage/updateProfile/updateEmail";
 
 export default {
   data() {

@@ -66,7 +66,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import qrReaderPage from "~/pages/app/qrReaderPage";
+import qrReaderPage from "~/components/app/pages/qrReaderPage";
 export default {
   data() {
     return {

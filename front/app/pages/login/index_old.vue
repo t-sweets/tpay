@@ -1,5 +1,5 @@
 <template>
-  <v-ons-page>
+  <div class="container">
     <el-card class="box-card login">
       <div slot="header" class="clearfix">
         <span>Login</span>
@@ -26,14 +26,12 @@
         </el-form-item>
       </el-form>
     </el-card>
-  </v-ons-page>
+  </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
 import Cookie from "js-cookie";
-import index from "~/pages/";
-import registerIDM from "@/components/app/pages/registerIdmPage";
 
 export default {
   data() {
@@ -71,13 +69,9 @@ export default {
           });
           if (res === true) {
             Cookie.set("auth", this.auth.Authorization, { expires: 3 });
-            switch (this.$route.params.method) {
-              case "register":
-                this.$emit("pop-page", registerIDM);
-                break;
-              default:
-                this.$emit("pop-page", index);
-            }
+            this.$route.params
+              ? this.$router.push("/")
+              : this.$router.push("/");
           } else {
             this.$alert(this.$nuxt.err_message(res), "認証エラー", {
               type: "error",
@@ -100,38 +94,29 @@ export default {
     },
     ...mapState(["auth", "profile"])
   },
-  layout: "app"
+  layout: "default"
 };
 </script>
 
 <style lang="scss" scoped>
-.login {
-  text-align: left;
-  margin: 10px auto;
-  @include pc {
-    width: 80%;
-  }
-  @include sp {
-    width: 95%;
-  }
-  max-width: 1024px;
-}
-form {
-  @include pc {
-    margin: 20px 50px;
-  }
-  @include sp {
-    margin: 0;
-  }
-}
-</style>
-
-<style lang="scss">
-.login {
-  .el-form--label-top .el-form-item__label {
+.container {
+  .login {
+    @include pc {
+      width: 80%;
+    }
     @include sp {
-      line-height: 0;
+      width: 100%;
+    }
+    margin: 0 auto;
+  }
+  form {
+    @include pc {
+      margin: 20px 50px;
+    }
+    @include sp {
+      margin: 0;
     }
   }
 }
 </style>
+

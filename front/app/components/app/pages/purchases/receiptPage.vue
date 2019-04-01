@@ -32,7 +32,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
-import detailPage from "~/pages/app/receiptDetailPage";
+import detailPage from "~/components/app/pages/purchases/receiptDetailPage";
 
 export default {
   data() {

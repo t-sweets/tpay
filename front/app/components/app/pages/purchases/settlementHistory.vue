@@ -31,7 +31,7 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from "vuex";
-import detailPage from "~/pages/app/receiptDetailPage";
+import detailPage from "~/components/app/pages/purchases/receiptDetailPage";
 export default {
   methods: {
     storeIcon(url) {

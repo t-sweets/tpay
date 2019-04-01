@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import mainPage from "~/pages/app/mainPage";
-import accountPage from "~/pages/app/accountPage";
+import mainPage from "~/components/app/pages/mainPage";
+import accountPage from "~/components/app/pages/accountPage";
 import registerIdmPage from "~/components/app/pages/registerIdmPage";
 import { mapState } from "vuex";
 

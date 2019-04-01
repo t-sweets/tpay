@@ -41,10 +41,10 @@
 import Cookie from "js-cookie";
 import { mapMutations, mapState } from "vuex";
 
-import felicaListPage from "~/pages/app/felicaListPage";
-import receiptPage from "~/pages/app/receiptPage";
-import settlementHistory from "~/pages/app/settlementHistory";
-import udpateProfile from "~/pages/app/updateProfile";
+import felicaListPage from "~/components/app/pages/accountPage/felicaListPage";
+import receiptPage from "~/components/app/pages/purchases/receiptPage";
+import settlementHistory from "~/components/app/pages/purchases/settlementHistory";
+import updateProfile from "~/components/app/pages/accountPage/updateProfile";
 
 export default {
   data() {
@@ -85,7 +85,7 @@ export default {
       }
     },
     pushUserImage() {
-      this.$emit("push-page", udpateProfile);
+      this.$emit("push-page", updateProfile);
     },
     logout() {
       this.$ons.notification
@@ -97,7 +97,7 @@ export default {
           if (index == 1) {
             this.setAuth(null);
             Cookie.remove("auth");
-            this.$router.push("/login");
+            location.reload();
           }
         });
     },

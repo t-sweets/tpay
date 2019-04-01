@@ -28,7 +28,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import udpateProfile from "~/pages/app/updateProfile";
+
 export default {
   computed: {
     ...mapState(["profile"])

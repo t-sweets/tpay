@@ -53,7 +53,7 @@
 <script>
 import Cookie from "js-cookie";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
-import detailPage from "~/pages/app/receiptDetailPage";
+import detailPage from "@/components/app/pages/purchases/receiptDetailPage";
 
 export default {
   data() {

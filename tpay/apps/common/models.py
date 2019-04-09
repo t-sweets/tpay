@@ -23,10 +23,3 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-    def remove(self):
-        self.deleted = True
-        self.save()
-
-    def unremove(self):
-        self.deleted = False
-        self.save()

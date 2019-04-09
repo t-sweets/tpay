@@ -28,6 +28,9 @@ class CheckoutManager(models.Manager):
 
         return checkout
 
+    def cancel(self):
+        return Account.deposit(self.purchaser.id, self.amount)
+
 
 class Checkout(BaseModel):
     CARD, QR = 0, 1
@@ -43,6 +46,14 @@ class Checkout(BaseModel):
     type = 'checkout'
 
     objects = CheckoutManager()
+
+    def delete(self, **kwargs):
+        if self.deleted:
+            raise ValueError(_('no content'))
+        else:
+            self.deleted = True
+            self.purchaser = self.objects.cancel()
+            self.save()
 
     def cash_value(self):
         return "{:,}".format(-self.amount)

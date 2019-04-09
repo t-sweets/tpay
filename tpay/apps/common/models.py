@@ -23,6 +23,3 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-    def delete(self, **kwargs):
-        self.deleted = True
-        self.save()

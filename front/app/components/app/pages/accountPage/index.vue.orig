@@ -50,8 +50,8 @@ import updateProfile from "~/components/app/pages/accountPage/updateProfile";
 import felicaListPage from "~/pages/app/felicaListPage";
 import receiptPage from "~/pages/app/receiptPage";
 import settlementHistory from "~/pages/app/settlementHistory";
+>>>>>>> e546af65c7e71ad0dea98b762af1164f2c70ef8a:front/app/pages/app/accountPage.vue
 import transferPage from "~/pages/app/transferPage";
->>>>>>> WIP transfer front:front/app/pages/app/accountPage.vue
 
 export default {
   data() {

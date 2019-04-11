@@ -45,7 +45,7 @@ import felicaListPage from "~/components/app/pages/accountPage/felicaListPage";
 import receiptPage from "~/components/app/pages/purchases/receiptPage";
 import settlementHistory from "~/components/app/pages/purchases/settlementHistory";
 import updateProfile from "~/components/app/pages/accountPage/updateProfile";
-import transferPage from "~/pages/app/transferPage";
+import transferPage from "~/components/app/pages/accountPage/transferPage";
 
 export default {
   data() {
@@ -67,7 +67,7 @@ export default {
           page: {
             extends: transferPage,
             onsNavigatorOptions: {
-              animation: 'lift'
+              animation: "lift"
             }
           }
           // click: () => {

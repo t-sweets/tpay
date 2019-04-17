@@ -29,6 +29,13 @@ class CheckoutManager(models.Manager):
         return checkout
 
     def cancel(self):
+        cancel = self.model(
+            amount=-self.amount,
+            payment_method=self.payment_method,
+            merchant=self.merchant,
+            purchaser=self.purchaser,
+        )
+        cancel.save()
         return Account.deposit(self.purchaser.id, self.amount)
 
 

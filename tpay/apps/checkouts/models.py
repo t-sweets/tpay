@@ -59,7 +59,7 @@ class Checkout(BaseModel):
             raise ValueError(_('no content'))
         else:
             self.deleted = True
-            self.purchaser = self.objects.cancel()
+            self.purchaser = Checkout.objects.cancel()
             self.save()
 
     def cash_value(self):

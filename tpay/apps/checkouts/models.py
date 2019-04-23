@@ -36,7 +36,7 @@ class CheckoutManager(models.Manager):
             purchaser=purchaser,
         )
         cancel.save()
-        return Account.deposit(self.purchaser.id, self.amount)
+        return Account.deposit(purchaser.id, amount)
 
 
 class Checkout(BaseModel):

@@ -10,7 +10,7 @@ from checkouts.serializer import CheckoutSerializer
 
 
 class AccountRegisterView(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAdminUser,)
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 

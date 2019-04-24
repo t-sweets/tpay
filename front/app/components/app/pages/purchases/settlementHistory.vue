@@ -17,9 +17,9 @@
             <img :src="storeIcon(item.merchant.icon)" alt width="50px" height="50px">
           </div>
           <div class="center">
-            <div class="title">{{ titleStr(item.type, item.merchant.name) }}</div>
+            <div class="title">{{ titleStr(item) }}</div>
             <div class="status">
-              <div :class="item.type">{{ toStatusStr(item.type) }}</div>
+              <div :class="toClassStr(item)">{{ toStatusStr(item) }}</div>
             </div>
           </div>
           <div class="right">{{ item.amount }}円</div>
@@ -42,20 +42,42 @@ export default {
     toDateString(date) {
       return $nuxt.dateFormat(new Date(date), "YYYY/MM/DD hh:mm");
     },
-    toStatusStr(type) {
-      switch (type) {
+    toStatusStr(item) {
+      switch (item.type) {
         case "checkout":
-          return "支払い完了";
+          return item.deleted
+            ? "キャンセル済"
+            : item.amount >= 0
+            ? "返金完了"
+            : "支払い完了";
+          break;
         case "deposit":
           return "チャージ完了";
       }
     },
-    titleStr(type, storename) {
-      switch (type) {
+    toClassStr(item) {
+      switch (item.type) {
         case "checkout":
-          return storename ? storename + "への支払い" : "お店への決済";
+          if (item.deleted) return "canceled";
+          else if (item.amount >= 0) return "refunded";
         case "deposit":
-          return storename ? storename + "でチャージ" : "チャージ";
+        default:
+          return item.type;
+      }
+      if (item.type == "checkout") {
+      }
+      return item.type == "checkout" && item.deleted ? "refunded" : item.type;
+    },
+    titleStr(item) {
+      switch (item.type) {
+        case "checkout":
+          if (item.deleted)
+            return `${item.merchant.name || "お店"}への支払いをキャンセル`;
+          else if (item.amount >= 0)
+            return `${item.merchant.name || "お店"}からの返金`;
+          else return `${item.merchant.name || "お店"}への支払い`;
+        case "deposit":
+          return `${item.merchant.name || "お店"}でチャージ`;
       }
     },
     async pushDetail(index) {
@@ -148,6 +170,18 @@ export default {
           color: white;
           width: 70px;
           background-color: rgb(0, 140, 255);
+          border-radius: 20px;
+        }
+        .canceled {
+          color: white;
+          width: 70px;
+          background-color: rgb(124, 124, 124);
+          border-radius: 20px;
+        }
+        .refunded {
+          color: white;
+          width: 70px;
+          background-color: rgb(255, 152, 34);
           border-radius: 20px;
         }
       }

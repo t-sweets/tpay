@@ -12,16 +12,18 @@
         <div class="store-icon">
           <img :src="storeIcon(getDetail.merchant.icon)" alt width="100px" height="100px">
         </div>
-        <div class="store-name">{{ titleStr(getDetail.type, getDetail.merchant.name) }}</div>
+        <div
+          class="store-name"
+        >{{ titleStr(getDetail.type, getDetail.merchant.name, getDetail.deleted) }}</div>
         <div class="payment-time">{{ paymentTime }}</div>
         <div class="payment-price">
           <span
             class="price"
-          >{{ getDetail.type == "checkout" ? getDetail.amount.slice(1) : getDetail.amount }}</span>
+          >{{ getDetail.type == "checkout" && !getDetail.deleted ? getDetail.amount.slice(1) : getDetail.amount }}</span>
           <span class="yen">円</span>
         </div>
         <div class="status">
-          <div :class="getDetail.type">{{ toStatusStr(getDetail.type) }}</div>
+          <div :class="toClassStr(getDetail)">{{ toStatusStr(getDetail) }}</div>
         </div>
         <hr>
         <div class="details">
@@ -33,8 +35,15 @@
             <div class="left">決済番号</div>
             <div class="right" style="font-size: 10px;">{{ getDetail.id }}</div>
           </div>
-          <div class="detail" v-if="getDetail.type=='checkout'">
+          <div
+            class="detail"
+            v-if="getDetail.type=='checkout' && !getDetail.deleted && getDetail.amount >= 0 "
+          >
             <div class="left">支払い金額</div>
+            <div class="right" style="font-weight: bold;">{{ getDetail.amount }}円</div>
+          </div>
+          <div class="detail" v-if="getDetail.type=='checkout' && getDetail.deleted ">
+            <div class="left">返金額</div>
             <div class="right" style="font-weight: bold;">{{ getDetail.amount.slice(1) }}円</div>
           </div>
           <div class="detail" v-else-if="getDetail.type=='deposit'">
@@ -56,20 +65,54 @@ export default {
         ? process.env.API_HOST + "/../.." + url.image
         : require("~/assets/images/icons/shop-noimage.svg");
     },
-    titleStr(type, storename) {
+    titleStr(type, storename, delflag) {
       switch (type) {
         case "checkout":
-          return storename ? storename + "への支払い" : "お店への決済";
+          return storename
+            ? storename + (!delflag ? "への支払い" : "からの返金")
+            : !delflag
+            ? "お店への決済"
+            : "お店からの返金";
         case "deposit":
           return storename ? storename + "でチャージ" : "チャージ";
       }
     },
-    toStatusStr(type) {
-      switch (type) {
+    toStatusStr(item) {
+      switch (item.type) {
         case "checkout":
-          return "支払い完了";
+          return item.deleted
+            ? "キャンセル済"
+            : item.amount >= 0
+            ? "返金完了"
+            : "支払い完了";
+          break;
         case "deposit":
           return "チャージ完了";
+      }
+    },
+    toClassStr(item) {
+      switch (item.type) {
+        case "checkout":
+          if (item.deleted) return "canceled";
+          else if (item.amount >= 0) return "refunded";
+        case "deposit":
+        default:
+          return item.type;
+      }
+      if (item.type == "checkout") {
+      }
+      return item.type == "checkout" && item.deleted ? "refunded" : item.type;
+    },
+    titleStr(item) {
+      switch (item.type) {
+        case "checkout":
+          if (item.deleted)
+            return `${item.merchant.name || "お店"}への支払いをキャンセル`;
+          else if (item.amount >= 0)
+            return `${item.merchant.name || "お店"}からの返金`;
+          else return `${item.merchant.name || "お店"}への支払い`;
+        case "deposit":
+          return `${item.merchant.name || "お店"}でチャージ`;
       }
     }
   },
@@ -154,6 +197,20 @@ export default {
         width: 100px;
         margin: 10px auto;
         background-color: rgb(0, 140, 255);
+        border-radius: 20px;
+      }
+      .refunded {
+        color: white;
+        width: 100px;
+        margin: 10px auto;
+        background-color: rgb(255, 152, 34);
+        border-radius: 20px;
+      }
+      .canceled {
+        color: white;
+        width: 100px;
+        margin: 10px auto;
+        background-color: rgb(124, 124, 124);
         border-radius: 20px;
       }
     }

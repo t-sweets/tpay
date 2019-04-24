@@ -100,7 +100,7 @@ export const actions = {
 export const getters = {
     checkoutList(state) {
         return state.transactionList.filter(( value ) => {
-            return value.type == "checkout";
+            return value.type == "checkout" && !value.deleted && value.amount < 0;
         })
     },
     getDetail(state) {

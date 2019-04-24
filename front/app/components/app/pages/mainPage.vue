@@ -193,6 +193,8 @@ export default {
         font-size: 16px;
         margin: 2px auto;
         padding-left: 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .status {
         font-size: 12px;

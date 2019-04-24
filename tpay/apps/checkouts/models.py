@@ -28,15 +28,15 @@ class CheckoutManager(models.Manager):
 
         return checkout
 
-    def cancel(self):
+    def cancel(self, amount, payment_method, merchant, purchaser):
         cancel = self.model(
-            amount=-self.amount,
-            payment_method=self.payment_method,
-            merchant=self.merchant,
-            purchaser=self.purchaser,
+            amount=-amount,
+            payment_method=payment_method,
+            merchant=merchant,
+            purchaser=purchaser,
         )
         cancel.save()
-        return Account.deposit(self.purchaser.id, self.amount)
+        return Account.deposit(purchaser.id, amount)
 
 
 class Checkout(BaseModel):
@@ -59,7 +59,12 @@ class Checkout(BaseModel):
             raise ValueError(_('no content'))
         else:
             self.deleted = True
-            self.purchaser = self.objects.cancel()
+            self.purchaser = Checkout.objects.cancel(
+                amount=self.amount,
+                payment_method=self.payment_method,
+                merchant=self.merchant,
+                purchaser=self.purchaser,
+            )
             self.save()
 
     def cash_value(self):

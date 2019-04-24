@@ -7,6 +7,7 @@ class TransactionSerializer(serializers.Serializer):
     amount = serializers.SerializerMethodField()
     created_time = serializers.DateTimeField()
     merchant = CheckoutMerchantSerializer()
+    deleted = serializers.BooleanField()
     type = serializers.CharField()
 
     def get_amount(self, obj):

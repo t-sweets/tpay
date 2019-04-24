@@ -30,7 +30,15 @@ class CheckoutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Checkout
-        fields = ('id', 'created_time', 'amount', 'merchant', 'merchant_id', 'idm', 'payment_method', 'purchaser', 'deleted')
+        fields = ('id',
+                  'created_time',
+                  'amount',
+                  'merchant',
+                  'merchant_id',
+                  'idm',
+                  'payment_method',
+                  'purchaser',
+                  'deleted')
         extra_kwargs = {
             'payment_method': {'write_only': True},
         }

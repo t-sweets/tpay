@@ -3,7 +3,7 @@
     <el-card class="box-card login">
       <div slot="header" class="clearfix">
         <span>Login</span>
-        <el-button style="float: right; padding: 3px 0" type="text">Forget password</el-button>
+        <!-- <el-button style="float: right; padding: 3px 0" type="text">Forget password</el-button> -->
       </div>
 
       <el-form
@@ -22,7 +22,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" native-type="submit">Login</el-button>
-          <el-button type="text" @click="$router.push('/register/')">Regiter</el-button>
+          <!-- <el-button type="text" @click="$router.push('/register/')">Regiter</el-button> -->
         </el-form-item>
       </el-form>
     </el-card>

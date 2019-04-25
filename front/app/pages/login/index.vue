@@ -68,7 +68,18 @@ export default {
             password: this.form.password
           });
           if (res === true) {
-            Cookie.set("auth", this.auth.Authorization, { expires: 3 });
+            // PWAで起動してたら、Cookieの期限を無期限に
+            if (this.$route.query.standalone)
+              Cookie.set("auth", this.auth.Authorization);
+            else Cookie.set("auth", this.auth.Authorization, { expires: 3 });
+
+            if (
+              this.$ons.platform.isIPhoneX() &&
+              this.$route.query.standalone
+            ) {
+              html.setAttribute("onsflag-iphonex-portrait", "");
+            }
+
             this.$emit("pop-page", index);
           } else {
             this.$alert(this.$nuxt.err_message(res), "認証エラー", {

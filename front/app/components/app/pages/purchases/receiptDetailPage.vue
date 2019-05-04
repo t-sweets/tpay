@@ -10,20 +10,16 @@
     <div class="detail-page">
       <div class="detail-body">
         <div class="store-icon">
-          <img :src="storeIcon(getDetail.merchant.icon)" alt width="100px" height="100px">
+          <img :src="storeIcon" alt width="100px" height="100px">
         </div>
-        <div
-          class="store-name"
-        >{{ titleStr(getDetail.type, getDetail.merchant.name, getDetail.deleted) }}</div>
+        <div class="store-name">{{ receiptTitleLabel }}</div>
         <div class="payment-time">{{ paymentTime }}</div>
         <div class="payment-price">
-          <span
-            class="price"
-          >{{ getDetail.type == "checkout" && !getDetail.deleted ? getDetail.amount.slice(1) : getDetail.amount }}</span>
+          <span class="price">{{ Math.abs(getDetail.amount) }}</span>
           <span class="yen">円</span>
         </div>
         <div class="status">
-          <div :class="toClassStr(getDetail)">{{ toStatusStr(getDetail) }}</div>
+          <div :class="className">{{ statusLabel }}</div>
         </div>
         <hr>
         <div class="details">
@@ -35,20 +31,9 @@
             <div class="left">決済番号</div>
             <div class="right" style="font-size: 10px;">{{ getDetail.id }}</div>
           </div>
-          <div
-            class="detail"
-            v-if="getDetail.type=='checkout' && !getDetail.deleted && getDetail.amount >= 0 "
-          >
-            <div class="left">支払い金額</div>
-            <div class="right" style="font-weight: bold;">{{ getDetail.amount }}円</div>
-          </div>
-          <div class="detail" v-if="getDetail.type=='checkout' && getDetail.deleted ">
-            <div class="left">返金額</div>
-            <div class="right" style="font-weight: bold;">{{ getDetail.amount.slice(1) }}円</div>
-          </div>
-          <div class="detail" v-else-if="getDetail.type=='deposit'">
-            <div class="left">チャージ金額</div>
-            <div class="right" style="font-weight: bold;">{{ getDetail.amount }}円</div>
+          <div class="detail">
+            <div class="left">{{ amountDetailLabel }}</div>
+            <div class="right" style="font-weight: bold;">{{ Math.abs(getDetail.amount) }}円</div>
           </div>
         </div>
       </div>
@@ -59,63 +44,6 @@
 <script>
 import { mapState, mapGetters } from "vuex";
 export default {
-  methods: {
-    storeIcon(url) {
-      return url
-        ? process.env.API_HOST + "/../.." + url.image
-        : require("~/assets/images/icons/shop-noimage.svg");
-    },
-    titleStr(type, storename, delflag) {
-      switch (type) {
-        case "checkout":
-          return storename
-            ? storename + (!delflag ? "への支払い" : "からの返金")
-            : !delflag
-            ? "お店への決済"
-            : "お店からの返金";
-        case "deposit":
-          return storename ? storename + "でチャージ" : "チャージ";
-      }
-    },
-    toStatusStr(item) {
-      switch (item.type) {
-        case "checkout":
-          return item.deleted
-            ? "キャンセル済"
-            : item.amount >= 0
-            ? "返金完了"
-            : "支払い完了";
-          break;
-        case "deposit":
-          return "チャージ完了";
-      }
-    },
-    toClassStr(item) {
-      switch (item.type) {
-        case "checkout":
-          if (item.deleted) return "canceled";
-          else if (item.amount >= 0) return "refunded";
-        case "deposit":
-        default:
-          return item.type;
-      }
-      if (item.type == "checkout") {
-      }
-      return item.type == "checkout" && item.deleted ? "refunded" : item.type;
-    },
-    titleStr(item) {
-      switch (item.type) {
-        case "checkout":
-          if (item.deleted)
-            return `${item.merchant.name || "お店"}への支払いをキャンセル`;
-          else if (item.amount >= 0)
-            return `${item.merchant.name || "お店"}からの返金`;
-          else return `${item.merchant.name || "お店"}への支払い`;
-        case "deposit":
-          return `${item.merchant.name || "お店"}でチャージ`;
-      }
-    }
-  },
   computed: {
     paymentTime() {
       return $nuxt.dateFormat(
@@ -123,6 +51,82 @@ export default {
         "YYYY年MM月DD日(E) hh:mm"
       );
     },
+
+    /**
+     * タイトルラベル
+     */
+    receiptTitleLabel() {
+      switch (this.getDetail.type) {
+        case "checkout":
+          if (this.getDetail.deleted)
+            return `${this.getDetail.merchant.name ||
+              "お店"}への支払いをキャンセル`;
+          else if (this.getDetail.amount >= 0)
+            return `${this.getDetail.merchant.name || "お店"}からの返金`;
+          else return `${this.getDetail.merchant.name || "お店"}への支払い`;
+        case "deposit":
+          return `${this.getDetail.merchant.name || "お店"}でチャージ`;
+        default:
+          return "";
+      }
+    },
+    /**
+     * 明細欄の支払い額のラベル
+     */
+    amountDetailLabel() {
+      if (this.getDetail.type == "checkout") {
+        if (this.getDetail.deleted) {
+          return "返金予定額";
+        } else if (this.getDetail.amount > 0) {
+          return "返金額";
+        } else {
+          return "支払い金額";
+        }
+      } else if (this.getDetail.type == "deposit") {
+        return "チャージ金額";
+      } else return false;
+    },
+
+    /**
+     * クラス名を算出
+     */
+    className() {
+      switch (this.getDetail.type) {
+        case "checkout":
+          if (this.getDetail.deleted) return "canceled";
+          else if (this.getDetail.amount >= 0) return "refunded";
+        case "deposit":
+        default:
+          return this.getDetail.type;
+      }
+    },
+
+    /**
+     * ステータスの文字列を算出
+     */
+    statusLabel() {
+      switch (this.getDetail.type) {
+        case "checkout":
+          return this.getDetail.deleted
+            ? "キャンセル済"
+            : this.getDetail.amount >= 0
+            ? "返金完了"
+            : "支払い完了";
+          break;
+        case "deposit":
+          return "チャージ完了";
+      }
+    },
+
+    /**
+     * お店のアイコンのURLを元に画像を生成（参照）
+     */
+    storeIcon() {
+      return this.getDetail.merchant.icon
+        ? process.env.API_HOST + "/../.." + this.getDetail.merchant.icon.image
+        : require("~/assets/images/icons/shop-noimage.svg");
+    },
+
     ...mapGetters("app", ["getDetail"])
   },
   mounted() {
@@ -230,6 +234,9 @@ export default {
           text-align: left;
           padding-left: 25px;
           padding-right: 25px;
+
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
         .right {
           display: inline-block;

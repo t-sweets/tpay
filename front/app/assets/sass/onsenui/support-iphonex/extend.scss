@@ -1,0 +1,18 @@
+html[onsflag-iphonex-portrait] .page__content {
+    padding-top: 0px !important;
+    padding-bottom: 34px;
+}
+
+html[onsflag-iphonex-portrait] .tabbar:not(.tabbar--top):not(.tabbar--top) {
+    padding-bottom: calc(34px  + 49px) !important;
+}
+
+@media (orientation: portrait) {
+    html[onsflag-iphonex-portrait] .toolbar {
+      padding-top: 0 !important;
+    }
+    html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background,
+    html[onsflag-iphonex-portrait] .toolbar:not(.toolbar--cover-content)+.page__background+.page__content {
+    top: 44px !important;
+  }
+}

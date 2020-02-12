@@ -13,21 +13,20 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('media_upload', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Merchant',
+            name='Transfer',
             fields=[
                 ('id', common.models.ULIDField(default=ulid.api.new, editable=False, max_length=26, primary_key=True, serialize=False, unique=True)),
                 ('created_time', models.DateTimeField(auto_now_add=True, verbose_name='created time')),
                 ('updated_time', models.DateTimeField(auto_now=True, verbose_name='updated time')),
                 ('deleted', models.BooleanField(default=False, verbose_name='deleted')),
-                ('name', models.CharField(max_length=30, verbose_name='merchant name')),
-                ('is_active', models.BooleanField(default=True, verbose_name='is active')),
-                ('accounts', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
-                ('icon', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='media_upload.Image', verbose_name='icon')),
+                ('amount', models.IntegerField(verbose_name='send value')),
+                ('message', models.CharField(blank=True, max_length=255, null=True, verbose_name='message')),
+                ('user_from', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='user_from', to=settings.AUTH_USER_MODEL, verbose_name='sender')),
+                ('user_to', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='user_to', to=settings.AUTH_USER_MODEL, verbose_name='sender')),
             ],
             options={
                 'abstract': False,

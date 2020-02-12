@@ -45,6 +45,7 @@ import felicaListPage from "~/components/app/pages/accountPage/felicaListPage";
 import receiptPage from "~/components/app/pages/purchases/receiptPage";
 import settlementHistory from "~/components/app/pages/purchases/settlementHistory";
 import updateProfile from "~/components/app/pages/accountPage/updateProfile";
+import transferPage from "~/components/app/pages/accountPage/transferPage";
 
 export default {
   data() {
@@ -63,15 +64,21 @@ export default {
         {
           title: "個人間送金",
           icon: require("~/assets/images/icons/sendmoney.svg"),
-          click: () => {
-            this.$alert(
-              "準備中です。もうしばらくお待ちください",
-              "Comming Soon!",
-              {
-                confirmButtonText: "OK"
-              }
-            );
+          page: {
+            extends: transferPage,
+            onsNavigatorOptions: {
+              animation: "lift"
+            }
           }
+          // click: () => {
+          //   this.$alert(
+          //     "準備中です。もうしばらくお待ちください",
+          //     "Comming Soon!",
+          //     {
+          //       confirmButtonText: "OK"
+          //     }
+          //   );
+          // }
         }
       ]
     };
